@@ -21,7 +21,7 @@ class Medicamentos(UUIDMixin,TimeStampedMixin):
     dosis_recomendada=models.CharField(max_length=100,null=False)
     descripcion=models.TextField(db_column="descripcion",null=True)
     precio=models.DecimalField(db_column="precio",max_digits=10,decimal_places=2,validators=[MinValueValidator(Decimal('0.01'))])
-    activo=models.BooleanField(default=True)
+    disponible=models.BooleanField(default=True)
     
     def __str__(self):
         return f"{self.nombre}, Dosis: {self.dosis_recomendada}"

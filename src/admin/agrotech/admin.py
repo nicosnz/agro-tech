@@ -4,6 +4,6 @@ from .models import Medicamentos
 
 @admin.register(Medicamentos)
 class MedicamentosAdmin(admin.ModelAdmin):
-    list_display=('nombre','dosis_recomendada','precio','activo')
+    list_display=('nombre','dosis_recomendada','precio','disponible')
     search_fields=('nombre',)
     readonly_fields=('creado_en','actualizado_en')

@@ -15,7 +15,7 @@ CREATE TABLE content.Medicamento (
     dosis_recomendada VARCHAR(100),
     descripcion     TEXT,
     precio          NUMERIC(10,2),
-    activo          BOOLEAN NOT NULL,
+    disponible          BOOLEAN NOT NULL,
     creado_en TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     actualizado_en TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 
@@ -28,7 +28,9 @@ CREATE TABLE content.TipoAlimento (
     precio            NUMERIC(10,2),
     cantidad_restante NUMERIC(10,2),
     creado_en TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    actualizado_en TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    actualizado_en TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    disponible          BOOLEAN NOT NULL,
+
 
 );
 
