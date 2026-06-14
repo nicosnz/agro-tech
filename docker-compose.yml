@@ -1,0 +1,21 @@
+services:
+  database:
+    image: postgres:16
+    ports:
+      - "5434:5432"
+    healthcheck:
+      test: ["CMD_SHELL","pg_isready -U $POSTGRES_USER -d $POSTGRES_PASSWORD"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+    volumes:
+      - ./db-desing:/docker-entrypoint-initdb.d
+      - agrovolume:/var/lib/postgresql/data
+    networks:
+      - agrotech-public
+volumes:
+  agrovolume:
+networks:
+  agrotech-public:
+    internal: false
