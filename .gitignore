@@ -1,0 +1,28 @@
+# Variables de entorno
+.env
+.env.local
+.env.*.local
+.env.production
+.env.development
+
+# Datos de volúmenes de Docker (si se persisten localmente)
+pgdata/
+data/
+
+# Backups y dumps de base de datos
+*.dump
+*.bak
+*.backup
+*.log
+
+# Editores
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Sistema operativo
+.DS_Store
+Thumbs.db
+desktop.ini
