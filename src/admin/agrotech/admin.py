@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Medicamentos,TipoAlimentos
+from .models import Medicamentos,TipoAlimentos,Potreros
 # Register your models here.
 
 @admin.register(Medicamentos)
@@ -25,3 +25,10 @@ class TipoAlimentosAdmin(admin.ModelAdmin):
     @admin.display(description='Cantidad restante')
     def cantidad_restante_display(self, obj):
         return f"{obj.cantidad_restante} kg"
+    
+@admin.register(Potreros)
+class PotrerosAdmin(admin.ModelAdmin):
+    list_display=('nombre','capacidad','ubicacion','estado')
+    search_fields=('nombre',)
+    list_filter=('estado',)
+    readonly_fields=('creado_en','actualizado_en')
