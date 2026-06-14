@@ -1,9 +1,27 @@
 from django.contrib import admin
-from .models import Medicamentos
+from .models import Medicamentos,TipoAlimentos
 # Register your models here.
 
 @admin.register(Medicamentos)
 class MedicamentosAdmin(admin.ModelAdmin):
-    list_display=('nombre','dosis_recomendada','precio','disponible')
+    list_display=('nombre','dosis_recomendada','precio_display','disponible')
     search_fields=('nombre',)
     readonly_fields=('creado_en','actualizado_en')
+
+    @admin.display(description='Precio')
+    def precio_display(self, obj):
+        return f"Bs. {obj.precio}"
+
+@admin.register(TipoAlimentos)
+class TipoAlimentosAdmin(admin.ModelAdmin):
+    list_display=('nombre','precio_display','cantidad_restante_display','disponible')
+    search_fields=('nombre',)
+    readonly_fields=('creado_en','actualizado_en')
+
+    @admin.display(description='Precio')
+    def precio_display(self, obj):
+        return f"Bs. {obj.precio}"
+
+    @admin.display(description='Cantidad restante')
+    def cantidad_restante_display(self, obj):
+        return f"{obj.cantidad_restante} kg"
