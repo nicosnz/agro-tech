@@ -31,6 +31,7 @@ class Medicamentos(UUIDMixin,TimeStampedMixin):
         db_table='"content"."medicamento"'
         verbose_name="Medicamento"
         verbose_name_plural="Medicamentos"
+        
 class TipoAlimentos(UUIDMixin,TimeStampedMixin):
     nombre=models.CharField(db_column="nombre",max_length=100,null=False,unique=True)
     descripcion=models.TextField(db_column="descripcion",null=True)
@@ -46,3 +47,28 @@ class TipoAlimentos(UUIDMixin,TimeStampedMixin):
         db_table='"content"."tipoalimento"'
         verbose_name="Tipo de Alimento"
         verbose_name_plural="Tipo de Alimentos"
+        
+class Potreros(UUIDMixin,TimeStampedMixin):
+    ESTADOS = [
+        ("Disponible", "Disponible"),
+        ("Ocupado", "Ocupado"),
+        ("En descando", "En descanso"),
+        ("Inactivo", "Inactivo")
+    ]
+    nombre=models.CharField(db_column="nombre",max_length=100,null=False,unique=True)
+    capacidad=models.IntegerField(validators=[MinValueValidator(1)],db_column="capacidad",null=False)
+    ubicacion=models.CharField(db_column="ubicacion",null=False,max_length=200)
+    estado = models.CharField(
+        max_length=20,
+        choices=ESTADOS,
+        default='Disponible'
+    )
+    
+    def __str__(self):
+        return self.nombre
+    
+    class Meta:
+        managed=False
+        db_table='"content"."potrero"'
+        verbose_name="Potrero"
+        verbose_name_plural="Potreros"

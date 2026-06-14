@@ -37,7 +37,7 @@ CREATE TABLE content.Potrero (
     nombre      VARCHAR(100) NOT NULL,
     capacidad   INT,
     ubicacion   VARCHAR(200),
-    estado      VARCHAR(50),
+    estado      VARCHAR(50) CHECK (estado IN ('Disponible', 'Ocupado', 'En Descanso', 'Inactivo')),
     creado_en TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     actualizado_en TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 
@@ -134,11 +134,11 @@ INSERT INTO content.TipoAlimento (id, nombre, descripcion, precio, cantidad_rest
     ('bbbbbbbb-0000-0000-0000-000000000005', 'Heno de avena',   'Forraje seco para época seca',       600.00, 3000.00, TRUE);
 
 INSERT INTO content.Potrero (id, nombre, capacidad, ubicacion, estado) VALUES
-    ('cccccccc-0000-0000-0000-000000000001', 'Potrero Norte',   30, 'Sector norte de la finca',  'disponible'),
-    ('cccccccc-0000-0000-0000-000000000002', 'Potrero Sur',     25, 'Sector sur de la finca',    'ocupado'),
-    ('cccccccc-0000-0000-0000-000000000003', 'Potrero Centro',  40, 'Zona central',              'ocupado'),
-    ('cccccccc-0000-0000-0000-000000000004', 'Potrero Oriente', 20, 'Colindante con el río',     'disponible'),
-    ('cccccccc-0000-0000-0000-000000000005', 'Potrero Cría',    15, 'Reservado para terneros',   'ocupado');
+    ('cccccccc-0000-0000-0000-000000000001', 'Potrero Norte',   30, 'Sector norte de la finca',  'Disponible'),
+    ('cccccccc-0000-0000-0000-000000000002', 'Potrero Sur',     25, 'Sector sur de la finca',    'Ocupado'),
+    ('cccccccc-0000-0000-0000-000000000003', 'Potrero Centro',  40, 'Zona central',              'Ocupado'),
+    ('cccccccc-0000-0000-0000-000000000004', 'Potrero Oriente', 20, 'Colindante con el río',     'Disponible'),
+    ('cccccccc-0000-0000-0000-000000000005', 'Potrero Cría',    15, 'Reservado para terneros',   'Ocupado');
 
 INSERT INTO content.Lote (id, nombre, tipo, cantidad_animales, fecha_creacion, estado, id_potrero) VALUES
     ('dddddddd-0000-0000-0000-000000000001', 'Lote Vientres A', 'Hembras reproductoras', 12, '2025-01-10', 'activo', 'cccccccc-0000-0000-0000-000000000002'),
