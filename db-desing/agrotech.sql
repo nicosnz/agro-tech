@@ -15,7 +15,7 @@ CREATE TABLE content.Medicamento (
     dosis_recomendada VARCHAR(100),
     descripcion     TEXT,
     precio          NUMERIC(10,2),
-    activo          BOOLEAN NOT NULL,
+    disponible          BOOLEAN NOT NULL,
     creado_en TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     actualizado_en TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 
@@ -27,9 +27,9 @@ CREATE TABLE content.TipoAlimento (
     descripcion       TEXT,
     precio            NUMERIC(10,2),
     cantidad_restante NUMERIC(10,2),
+    disponible          BOOLEAN NOT NULL,
     creado_en TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     actualizado_en TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-
 );
 
 CREATE TABLE content.Potrero (
@@ -119,19 +119,19 @@ CREATE TABLE content.Alimentacion (
 -- DATOS INICIALES
 -- ============================================================
 
-INSERT INTO content.Medicamento (id, nombre, dosis_recomendada, descripcion, precio, activo) VALUES
+INSERT INTO content.Medicamento (id, nombre, dosis_recomendada, descripcion, precio, disponible) VALUES
     ('aaaaaaaa-0000-0000-0000-000000000001', 'Ivermectina 1%',   '1 ml por 50 kg',  'Antiparasitario de amplio espectro',  12500.00, TRUE),
     ('aaaaaaaa-0000-0000-0000-000000000002', 'Vacuna FMD',       '2 ml por animal',  'Vacuna contra fiebre aftosa',          8900.00, TRUE),
     ('aaaaaaaa-0000-0000-0000-000000000003', 'Oxitetraciclina',  '10 mg por kg',     'Antibiótico de amplio espectro',      15000.00, TRUE),
     ('aaaaaaaa-0000-0000-0000-000000000004', 'Vitamina ADE',     '5 ml por animal',  'Suplemento vitamínico',                6200.00, TRUE),
     ('aaaaaaaa-0000-0000-0000-000000000005', 'Vacuna Brucelosis','2 ml por animal',  'Vacuna contra brucelosis bovina',      9500.00, TRUE);
 
-INSERT INTO content.TipoAlimento (id, nombre, descripcion, precio, cantidad_restante) VALUES
-    ('bbbbbbbb-0000-0000-0000-000000000001', 'Pasto kikuyo',    'Pasto de corte para suplemento',    350.00, 5000.00),
-    ('bbbbbbbb-0000-0000-0000-000000000002', 'Maíz molido',     'Grano molido para concentrado',    1200.00, 2000.00),
-    ('bbbbbbbb-0000-0000-0000-000000000003', 'Sal mineralizada','Sal con minerales esenciales',       800.00,  500.00),
-    ('bbbbbbbb-0000-0000-0000-000000000004', 'Melaza',          'Subproducto de caña para energía',   450.00, 1000.00),
-    ('bbbbbbbb-0000-0000-0000-000000000005', 'Heno de avena',   'Forraje seco para época seca',       600.00, 3000.00);
+INSERT INTO content.TipoAlimento (id, nombre, descripcion, precio, cantidad_restante,disponible) VALUES
+    ('bbbbbbbb-0000-0000-0000-000000000001', 'Pasto kikuyo',    'Pasto de corte para suplemento',    350.00, 5000.00, TRUE),
+    ('bbbbbbbb-0000-0000-0000-000000000002', 'Maíz molido',     'Grano molido para concentrado',    1200.00, 2000.00, TRUE),
+    ('bbbbbbbb-0000-0000-0000-000000000003', 'Sal mineralizada','Sal con minerales esenciales',       800.00,  500.00, TRUE),
+    ('bbbbbbbb-0000-0000-0000-000000000004', 'Melaza',          'Subproducto de caña para energía',   450.00, 1000.00, TRUE),
+    ('bbbbbbbb-0000-0000-0000-000000000005', 'Heno de avena',   'Forraje seco para época seca',       600.00, 3000.00, TRUE);
 
 INSERT INTO content.Potrero (id, nombre, capacidad, ubicacion, estado) VALUES
     ('cccccccc-0000-0000-0000-000000000001', 'Potrero Norte',   30, 'Sector norte de la finca',  'disponible'),
