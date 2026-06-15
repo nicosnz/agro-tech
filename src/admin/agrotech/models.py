@@ -53,7 +53,7 @@ class Potreros(UUIDMixin,TimeStampedMixin):
     ESTADOS = [
         ("Disponible", "Disponible"),
         ("Ocupado", "Ocupado"),
-        ("En descando", "En descanso"),
+        ("En descanso", "En descanso"),
         ("Inactivo", "Inactivo")
     ]
     nombre=models.CharField(db_column="nombre",max_length=100,null=False,unique=True)
@@ -90,9 +90,21 @@ class Lotes(UUIDMixin,TimeStampedMixin):
     activo=models.BooleanField(default=True)
     potrero = models.ForeignKey("Potreros",on_delete=models.PROTECT,db_column="id_potrero",related_name="lote")
 
+    ESTADOS_BLOQUEADOS_POTRERO = ('En descando', 'Inactivo')
+
     def clean(self):
         if not self.activo and self.pk and self.bovinos.exists():
             raise ValidationError("No se puede desactivar el lote porque tiene bovinos asociados.")
+
+        if self.potrero_id:
+            potrero_cambio = self._state.adding or (
+                self.pk and Lotes.objects.filter(pk=self.pk).values_list('potrero_id', flat=True).first() != self.potrero_id
+            )
+            if potrero_cambio and self.potrero.estado in self.ESTADOS_BLOQUEADOS_POTRERO:
+                raise ValidationError(
+                    f"No se puede asignar el lote al potrero '{self.potrero.nombre}' "
+                    f"porque está en estado '{self.potrero.estado}'."
+                )
 
 
     def __str__(self):
