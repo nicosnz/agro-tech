@@ -128,6 +128,16 @@ class Bovinos(UUIDMixin,TimeStampedMixin):
     lote = models.ForeignKey("Lotes",on_delete=models.PROTECT,db_column="id_lote",related_name="bovinos")
     origen=models.CharField(max_length=20,choices=ORIGENES,null=False)
 
+    def clean(self):
+        if self.origen == 'Nacimiento propio':
+            errores = {}
+            if not self.madre:
+                errores['madre'] = 'La madre es obligatoria para bovinos de nacimiento propio.'
+            if not self.padre:
+                errores['padre'] = 'El padre es obligatorio para bovinos de nacimiento propio.'
+            if errores:
+                raise ValidationError(errores)
+
     def _actualizar_conteo(self, lote):
         if lote:
             lote.cantidad_animales = lote.bovinos.count()
