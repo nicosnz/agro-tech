@@ -90,7 +90,7 @@ class Lotes(UUIDMixin,TimeStampedMixin):
     activo=models.BooleanField(default=True)
     potrero = models.ForeignKey("Potreros",on_delete=models.PROTECT,db_column="id_potrero",related_name="lote")
 
-    ESTADOS_BLOQUEADOS_POTRERO = ('En descando', 'Inactivo')
+    ESTADOS_BLOQUEADOS_POTRERO = ('En descanso', 'Inactivo')
 
     def clean(self):
         if not self.activo and self.pk and self.bovinos.exists():
@@ -245,6 +245,8 @@ class Alimentacion(UUIDMixin,TimeStampedMixin):
     fecha_alimentacion = models.DateField(null=False,auto_now_add=True)
     cantidad=models.DecimalField(db_column="cantidad",max_digits=5,decimal_places=2,validators=[MinValueValidator(Decimal('0.01'))],help_text="Kg.")
     alimento = models.ForeignKey("TipoAlimentos",on_delete=models.PROTECT,db_column="id_tipo_alimento",related_name="alimentacion_tipo")
+    observacion=models.TextField(db_column="observacion",null=True)
+
     lote = models.ForeignKey("Lotes",on_delete=models.PROTECT,db_column="id_lote",related_name="alimentacion_lote")
 
 
@@ -274,3 +276,25 @@ class Alimentacion(UUIDMixin,TimeStampedMixin):
         db_table='"content"."alimentacion"'
         verbose_name="Alimentacion"
         verbose_name_plural="Alimentaciones"
+        
+class Vacunacion(UUIDMixin,TimeStampedMixin):
+    medicamento=models.ForeignKey("Medicamentos",on_delete=models.PROTECT,db_column='id_medicamento',related_name='vacunacion_medicamento')
+    fecha_aplicacion=models.DateField(auto_now_add=True)
+    animal=models.ForeignKey('Bovinos',on_delete=models.PROTECT,db_column='id_animal',related_name='vacunacion_animal')
+    dosis=models.DecimalField(db_column="dosis",max_digits=5,decimal_places=2,validators=[MinValueValidator(Decimal('0.01'))])
+    observacion=models.TextField(db_column="observacion",null=True)
+
+    def clean(self):
+        if self._state.adding and self.medicamento_id and not self.medicamento.disponible:
+            raise ValidationError(
+                f"El medicamento '{self.medicamento.nombre}' no está disponible."
+            )
+
+    def __str__(self):
+        return f"{self.fecha_aplicacion} - {self.medicamento}"
+
+    class Meta:
+        managed=False
+        db_table='"content"."vacunacion"'
+        verbose_name="Vacunacion"
+        verbose_name_plural="Vacunaciones"
