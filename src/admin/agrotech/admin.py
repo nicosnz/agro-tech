@@ -1,6 +1,6 @@
 from django.contrib import admin, messages
 from django.db.models import ProtectedError
-from .models import Medicamentos,TipoAlimentos,Potreros,Lotes,Bovinos,EstadosBovinos,Pesajes,Alimentacion
+from .models import Medicamentos,TipoAlimentos,Potreros,Lotes,Bovinos,EstadosBovinos,Pesajes,Alimentacion,Vacunacion
 # Register your models here.
 class BovinosInline(admin.TabularInline):
     model = Bovinos
@@ -17,6 +17,9 @@ class PesajesInline(admin.TabularInline):
 class AlimentacionInline(admin.TabularInline):
     model = Alimentacion
     extra = 0
+class VacunacionInline(admin.TabularInline):
+    model=Vacunacion
+    extra=0
 @admin.register(Medicamentos)
 class MedicamentosAdmin(admin.ModelAdmin):
     list_display=('nombre','dosis_recomendada','precio_display','disponible')
@@ -82,7 +85,7 @@ class LotesAdmin(admin.ModelAdmin):
 
 @admin.register(Bovinos)
 class BovinosAdmin(admin.ModelAdmin):
-    inlines=[EstadoBovinoInline,PesajesInline]
+    inlines=[EstadoBovinoInline,PesajesInline,VacunacionInline]
     autocomplete_fields=['lote']
     list_display=('sexo','raza','fecha_nacimiento','lote','origen')
     search_fields=('id',)
@@ -131,3 +134,8 @@ class AlimentacionAdmin(admin.ModelAdmin):
     @admin.display(description='Cantidad')
     def cantidad_display(self,obj):
         return f"{obj.cantidad} .kg"
+@admin.register(Vacunacion)
+class VacunacionAdmin(admin.ModelAdmin):
+    list_display=('fecha_aplicacion','medicamento','dosis')
+    search_fields=('fecha_aplicacion',)
+    readonly_fields=('fecha_aplicacion','creado_en','actualizado_en')
