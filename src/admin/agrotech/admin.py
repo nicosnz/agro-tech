@@ -1,6 +1,6 @@
 from django.contrib import admin, messages
 from django.db.models import ProtectedError
-from .models import Medicamentos,TipoAlimentos,Potreros,Lotes,Bovinos,EstadosBovinos
+from .models import Medicamentos,TipoAlimentos,Potreros,Lotes,Bovinos,EstadosBovinos,Pesajes
 # Register your models here.
 class BovinosInline(admin.TabularInline):
     model = Bovinos
@@ -10,6 +10,9 @@ class LotesInline(admin.TabularInline):
     extra=0
 class EstadoBovinoInline(admin.TabularInline):
     model=EstadosBovinos
+    extra=0
+class PesajesInline(admin.TabularInline):
+    model=Pesajes
     extra=0
 @admin.register(Medicamentos)
 class MedicamentosAdmin(admin.ModelAdmin):
@@ -61,7 +64,7 @@ class LotesAdmin(admin.ModelAdmin):
             )
 @admin.register(Bovinos)
 class BovinosAdmin(admin.ModelAdmin):
-    inlines=[EstadoBovinoInline]
+    inlines=[EstadoBovinoInline,PesajesInline]
     autocomplete_fields=['lote']
     list_display=('sexo','raza','fecha_nacimiento','lote','origen')
     search_fields=('id',)
@@ -78,3 +81,11 @@ class EstadoBovinosAdmin(admin.ModelAdmin):
     list_display=('bovino','estado','fecha_registro','descripcion')
     list_filter=('estado',)
     readonly_fields=('creado_en','actualizado_en')
+@admin.register(Pesajes)
+class PesajesAdmin(admin.ModelAdmin):
+    list_display=('fecha_pesaje','peso_display','bovino')
+    search_fields=('fecha_pesaje',)
+    readonly_fields=('creado_en','actualizado_en','fecha_pesaje')
+    @admin.display(description='Peso')
+    def peso_display(self, obj):
+        return f"{obj.peso} .kg"
