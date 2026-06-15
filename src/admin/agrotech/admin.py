@@ -1,12 +1,15 @@
 from django.contrib import admin, messages
 from django.db.models import ProtectedError
-from .models import Medicamentos,TipoAlimentos,Potreros,Lotes,Bovinos
+from .models import Medicamentos,TipoAlimentos,Potreros,Lotes,Bovinos,EstadosBovinos
 # Register your models here.
 class BovinosInline(admin.TabularInline):
     model = Bovinos
     extra=0
 class LotesInline(admin.TabularInline):
     model=Lotes
+    extra=0
+class EstadoBovinoInline(admin.TabularInline):
+    model=EstadosBovinos
     extra=0
 @admin.register(Medicamentos)
 class MedicamentosAdmin(admin.ModelAdmin):
@@ -58,8 +61,20 @@ class LotesAdmin(admin.ModelAdmin):
             )
 @admin.register(Bovinos)
 class BovinosAdmin(admin.ModelAdmin):
+    inlines=[EstadoBovinoInline]
     autocomplete_fields=['lote']
     list_display=('sexo','raza','fecha_nacimiento','lote','origen')
     search_fields=('id',)
     list_filter=('sexo','raza','lote','origen')
+    readonly_fields=('creado_en','actualizado_en')
+
+    def get_readonly_fields(self, request, obj=None):
+        if obj and obj.estado_actual() in Bovinos.ESTADOS_BLOQUEADOS:
+            return [f.name for f in obj._meta.fields]
+        return self.readonly_fields
+    
+@admin.register(EstadosBovinos)
+class EstadoBovinosAdmin(admin.ModelAdmin):
+    list_display=('bovino','estado','fecha_registro','descripcion')
+    list_filter=('estado',)
     readonly_fields=('creado_en','actualizado_en')

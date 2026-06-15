@@ -141,22 +141,24 @@ INSERT INTO content.Potrero (id, nombre, capacidad, ubicacion, estado) VALUES
     ('cccccccc-0000-0000-0000-000000000005', 'Potrero Cría',    15, 'Reservado para terneros',   'Ocupado');
 
 INSERT INTO content.Lote (id, nombre, tipo, cantidad_animales, fecha_creacion, activo, id_potrero) VALUES
-    ('dddddddd-0000-0000-0000-000000000001', 'Lote Vientres A', 'Nacimiento', 12, '2025-01-10', TRUE, 'cccccccc-0000-0000-0000-000000000002'),
-    ('dddddddd-0000-0000-0000-000000000002', 'Lote Levante',    'Recria',      8, '2025-02-15', TRUE, 'cccccccc-0000-0000-0000-000000000003'),
-    ('dddddddd-0000-0000-0000-000000000003', 'Lote Terneros',   'Engorde',                  6, '2025-03-01', TRUE, 'cccccccc-0000-0000-0000-000000000005'),
-    ('dddddddd-0000-0000-0000-000000000004', 'Lote Engorde',    'Engorde',     10, '2025-01-20', TRUE, 'cccccccc-0000-0000-0000-000000000003');
+    ('dddddddd-0000-0000-0000-000000000001', 'Lote Vientres A', 'Nacimiento', 4, '2025-01-10', TRUE, 'cccccccc-0000-0000-0000-000000000002'),
+    ('dddddddd-0000-0000-0000-000000000002', 'Lote Levante',    'Recria',     2, '2025-02-15', TRUE, 'cccccccc-0000-0000-0000-000000000003'),
+    ('dddddddd-0000-0000-0000-000000000003', 'Lote Terneros',   'Engorde',    2, '2025-03-01', TRUE, 'cccccccc-0000-0000-0000-000000000005'),
+    ('dddddddd-0000-0000-0000-000000000004', 'Lote Engorde',    'Engorde',    2, '2025-01-20', TRUE, 'cccccccc-0000-0000-0000-000000000003');
 
+-- bov-1,2,3,10: Comprado (sin madre/padre requeridos)
+-- bov-4,5,6,7: Nacimiento propio (madre y padre obligatorios; padres = bov-8 o bov-9)
 INSERT INTO content.Bovino (id, sexo, raza, fecha_nacimiento, id_madre, id_padre, id_lote, origen) VALUES
-    ('eeeeeeee-0000-0000-0000-000000000001', 'Hembra', 'Brahman',   '2020-03-12', NULL,                                   NULL, 'dddddddd-0000-0000-0000-000000000001', 'Nacido en finca'),
-    ('eeeeeeee-0000-0000-0000-000000000002', 'Hembra', 'Brahman',   '2019-07-22', NULL,                                   NULL, 'dddddddd-0000-0000-0000-000000000001', 'Comprado'),
-    ('eeeeeeee-0000-0000-0000-000000000003', 'Hembra', 'Simmental', '2021-01-05', NULL,                                   NULL, 'dddddddd-0000-0000-0000-000000000001', 'Nacido en finca'),
-    ('eeeeeeee-0000-0000-0000-000000000004', 'Macho',  'Brahman',   '2023-05-18', 'eeeeeeee-0000-0000-0000-000000000001', NULL, 'dddddddd-0000-0000-0000-000000000002', 'Nacido en finca'),
-    ('eeeeeeee-0000-0000-0000-000000000005', 'Macho',  'Cebú',      '2023-08-30', 'eeeeeeee-0000-0000-0000-000000000002', NULL, 'dddddddd-0000-0000-0000-000000000002', 'Nacido en finca'),
-    ('eeeeeeee-0000-0000-0000-000000000006', 'Hembra', 'Brahman',   '2024-02-14', 'eeeeeeee-0000-0000-0000-000000000001', NULL, 'dddddddd-0000-0000-0000-000000000003', 'Nacido en finca'),
-    ('eeeeeeee-0000-0000-0000-000000000007', 'Macho',  'Simmental', '2024-04-01', 'eeeeeeee-0000-0000-0000-000000000003', NULL, 'dddddddd-0000-0000-0000-000000000003', 'Nacido en finca'),
-    ('eeeeeeee-0000-0000-0000-000000000008', 'Macho',  'Cebú',      '2022-11-10', NULL,                                   NULL, 'dddddddd-0000-0000-0000-000000000004', 'Comprado'),
-    ('eeeeeeee-0000-0000-0000-000000000009', 'Macho',  'Brahman',   '2022-09-05', NULL,                                   NULL, 'dddddddd-0000-0000-0000-000000000004', 'Comprado'),
-    ('eeeeeeee-0000-0000-0000-00000000000a', 'Hembra', 'Holstein',  '2020-06-18', NULL,                                   NULL, 'dddddddd-0000-0000-0000-000000000001', 'Comprado');
+    ('eeeeeeee-0000-0000-0000-000000000001', 'Hembra', 'Brahman', '2020-03-12', NULL,                                   NULL,                                   'dddddddd-0000-0000-0000-000000000001', 'Comprado'),
+    ('eeeeeeee-0000-0000-0000-000000000002', 'Hembra', 'Brahman', '2019-07-22', NULL,                                   NULL,                                   'dddddddd-0000-0000-0000-000000000001', 'Comprado'),
+    ('eeeeeeee-0000-0000-0000-000000000003', 'Hembra', 'Brangus', '2021-01-05', NULL,                                   NULL,                                   'dddddddd-0000-0000-0000-000000000001', 'Comprado'),
+    ('eeeeeeee-0000-0000-0000-000000000008', 'Macho',  'Nelore',  '2022-11-10', NULL,                                   NULL,                                   'dddddddd-0000-0000-0000-000000000004', 'Comprado'),
+    ('eeeeeeee-0000-0000-0000-000000000009', 'Macho',  'Brahman', '2022-09-05', NULL,                                   NULL,                                   'dddddddd-0000-0000-0000-000000000004', 'Comprado'),
+    ('eeeeeeee-0000-0000-0000-00000000000a', 'Hembra', 'Brangus', '2020-06-18', NULL,                                   NULL,                                   'dddddddd-0000-0000-0000-000000000001', 'Comprado'),
+    ('eeeeeeee-0000-0000-0000-000000000004', 'Macho',  'Brahman', '2023-05-18', 'eeeeeeee-0000-0000-0000-000000000001', 'eeeeeeee-0000-0000-0000-000000000009', 'dddddddd-0000-0000-0000-000000000002', 'Nacimiento propio'),
+    ('eeeeeeee-0000-0000-0000-000000000005', 'Macho',  'Nelore',  '2023-08-30', 'eeeeeeee-0000-0000-0000-000000000002', 'eeeeeeee-0000-0000-0000-000000000009', 'dddddddd-0000-0000-0000-000000000002', 'Nacimiento propio'),
+    ('eeeeeeee-0000-0000-0000-000000000006', 'Hembra', 'Brahman', '2024-02-14', 'eeeeeeee-0000-0000-0000-000000000001', 'eeeeeeee-0000-0000-0000-000000000009', 'dddddddd-0000-0000-0000-000000000003', 'Nacimiento propio'),
+    ('eeeeeeee-0000-0000-0000-000000000007', 'Macho',  'Brangus', '2024-04-01', 'eeeeeeee-0000-0000-0000-000000000003', 'eeeeeeee-0000-0000-0000-000000000008', 'dddddddd-0000-0000-0000-000000000003', 'Nacimiento propio');
 
 INSERT INTO content.Pesaje (id, fecha_pesaje, peso, id_animal) VALUES
     ('ffffffff-0000-0000-0000-000000000001', '2025-01-15', 380.5, 'eeeeeeee-0000-0000-0000-000000000001'),
@@ -185,7 +187,7 @@ INSERT INTO content.Vacunacion (id, id_medicamento, fecha_aplicacion, id_animal,
 INSERT INTO content.EstadoAnimal (id, estado, descripcion, fecha_registro, id_animal) VALUES
     ('22222222-0000-0000-0000-000000000001', 'Sano',           'Sin novedad',                         '2025-01-15', 'eeeeeeee-0000-0000-0000-000000000001'),
     ('22222222-0000-0000-0000-000000000002', 'Sano',           'Sin novedad',                         '2025-01-15', 'eeeeeeee-0000-0000-0000-000000000002'),
-    ('22222222-0000-0000-0000-000000000003', 'Gestante',       'Preñez confirmada por palpación',     '2025-03-10', 'eeeeeeee-0000-0000-0000-000000000003'),
+    ('22222222-0000-0000-0000-000000000003', 'En observacion',  'Preñez confirmada por palpación',     '2025-03-10', 'eeeeeeee-0000-0000-0000-000000000003'),
     ('22222222-0000-0000-0000-000000000004', 'Sano',           'Sin novedad, buen desarrollo',        '2025-02-01', 'eeeeeeee-0000-0000-0000-000000000004'),
     ('22222222-0000-0000-0000-000000000005', 'Sano',           'Sin novedad, buen desarrollo',        '2025-02-01', 'eeeeeeee-0000-0000-0000-000000000005'),
     ('22222222-0000-0000-0000-000000000006', 'Sano',           'Ternero saludable',                   '2025-03-10', 'eeeeeeee-0000-0000-0000-000000000006'),

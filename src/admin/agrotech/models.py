@@ -125,10 +125,20 @@ class Bovinos(UUIDMixin,TimeStampedMixin):
     fecha_nacimiento = models.DateField(null=False)
     madre=models.ForeignKey("self",null=True,blank=True,on_delete=models.SET_NULL,related_name='hijos_madre',db_column='id_madre')
     padre=models.ForeignKey("self",null=True,blank=True,on_delete=models.SET_NULL,related_name='hijos_padre',db_column='id_padre')
-    lote = models.ForeignKey("Lotes",on_delete=models.PROTECT,db_column="id_lote",related_name="bovinos")
+    lote = models.ForeignKey("Lotes",on_delete=models.PROTECT,db_column="id_lote",related_name="bovinos",null=True,blank=True)
     origen=models.CharField(max_length=20,choices=ORIGENES,null=False)
 
+    ESTADOS_BLOQUEADOS = ('Fallecido', 'Vendido')
+
+    def estado_actual(self):
+        ultimo = self.estado_bovinos.order_by('-fecha_registro').first()
+        return ultimo.estado if ultimo else None
+
     def clean(self):
+        if self.pk and self.estado_actual() in self.ESTADOS_BLOQUEADOS:
+            raise ValidationError(
+                f"Este bovino está marcado como '{self.estado_actual()}' y no puede ser modificado."
+            )
         if self.origen == 'Nacimiento propio':
             errores = {}
             if not self.madre:
@@ -168,3 +178,34 @@ class Bovinos(UUIDMixin,TimeStampedMixin):
         db_table='"content"."bovino"'
         verbose_name="Bovino"
         verbose_name_plural="Bovinos"
+class EstadosBovinos(UUIDMixin,TimeStampedMixin):
+    ESTADOS = [
+        ("En observacion", "En observacion"),
+        ("En tratamiento", "En tratamiento"),
+        ("Fallecido", "Fallecido"),
+        ("Vendido","Vendido"),
+        ("Sano","Sano")
+    ]
+
+    estado = models.CharField(
+        max_length=20,
+        choices=ESTADOS,
+        null=False
+    )
+    descripcion=models.TextField(db_column="descripcion",null=True)
+    fecha_registro = models.DateField(null=False)
+    bovino = models.ForeignKey("Bovinos",on_delete=models.PROTECT,db_column="id_animal",related_name="estado_bovinos")
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+        if self.estado in Bovinos.ESTADOS_BLOQUEADOS and self.bovino.lote:
+            self.bovino.lote = None
+            self.bovino.save()
+
+    def __str__(self):
+        return self.estado
+
+    class Meta:
+        managed=False
+        db_table='"content"."estadoanimal"'
+        verbose_name="Estado Animal"
+        verbose_name_plural="Estados Animal"
