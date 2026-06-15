@@ -46,10 +46,10 @@ CREATE TABLE content.Potrero (
 CREATE TABLE content.Lote (
     id           UUID PRIMARY KEY,
     nombre            VARCHAR(100) NOT NULL,
-    tipo              VARCHAR(50),
+    tipo              VARCHAR(50) CHECK (tipo IN ('Nacimiento','Recria','Engorde')),
     cantidad_animales INT DEFAULT 0,
     fecha_creacion    DATE,
-    estado            VARCHAR(50),
+    activo          BOOLEAN NOT NULL,
     id_potrero        UUID REFERENCES content.Potrero(id),
     creado_en TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     actualizado_en TIMESTAMP DEFAULT CURRENT_TIMESTAMP
@@ -58,13 +58,13 @@ CREATE TABLE content.Lote (
 
 CREATE TABLE content.Bovino (
     id       UUID PRIMARY KEY,
-    sexo            VARCHAR(10),
-    raza            VARCHAR(100),
+    sexo            VARCHAR(10) CHECK (sexo IN ('Macho','Hembra')),
+    raza            VARCHAR(100) CHECK (raza IN ('Nelore','Brangus','Brahman')),
     fecha_nacimiento DATE,
     id_madre        UUID REFERENCES content.Bovino(id),
     id_padre        UUID REFERENCES content.Bovino(id),
     id_lote         UUID REFERENCES content.Lote(id),
-    origen          VARCHAR(100),
+    origen          VARCHAR(100) CHECK (origen IN ('Comprado','Nacimiento propio')),
     creado_en TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     actualizado_en TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 
@@ -140,11 +140,11 @@ INSERT INTO content.Potrero (id, nombre, capacidad, ubicacion, estado) VALUES
     ('cccccccc-0000-0000-0000-000000000004', 'Potrero Oriente', 20, 'Colindante con el río',     'Disponible'),
     ('cccccccc-0000-0000-0000-000000000005', 'Potrero Cría',    15, 'Reservado para terneros',   'Ocupado');
 
-INSERT INTO content.Lote (id, nombre, tipo, cantidad_animales, fecha_creacion, estado, id_potrero) VALUES
-    ('dddddddd-0000-0000-0000-000000000001', 'Lote Vientres A', 'Hembras reproductoras', 12, '2025-01-10', 'activo', 'cccccccc-0000-0000-0000-000000000002'),
-    ('dddddddd-0000-0000-0000-000000000002', 'Lote Levante',    'Machos en levante',      8, '2025-02-15', 'activo', 'cccccccc-0000-0000-0000-000000000003'),
-    ('dddddddd-0000-0000-0000-000000000003', 'Lote Terneros',   'Crías',                  6, '2025-03-01', 'activo', 'cccccccc-0000-0000-0000-000000000005'),
-    ('dddddddd-0000-0000-0000-000000000004', 'Lote Engorde',    'Machos en engorde',     10, '2025-01-20', 'activo', 'cccccccc-0000-0000-0000-000000000003');
+INSERT INTO content.Lote (id, nombre, tipo, cantidad_animales, fecha_creacion, activo, id_potrero) VALUES
+    ('dddddddd-0000-0000-0000-000000000001', 'Lote Vientres A', 'Nacimiento', 12, '2025-01-10', TRUE, 'cccccccc-0000-0000-0000-000000000002'),
+    ('dddddddd-0000-0000-0000-000000000002', 'Lote Levante',    'Recria',      8, '2025-02-15', TRUE, 'cccccccc-0000-0000-0000-000000000003'),
+    ('dddddddd-0000-0000-0000-000000000003', 'Lote Terneros',   'Engorde',                  6, '2025-03-01', TRUE, 'cccccccc-0000-0000-0000-000000000005'),
+    ('dddddddd-0000-0000-0000-000000000004', 'Lote Engorde',    'Engorde',     10, '2025-01-20', TRUE, 'cccccccc-0000-0000-0000-000000000003');
 
 INSERT INTO content.Bovino (id, sexo, raza, fecha_nacimiento, id_madre, id_padre, id_lote, origen) VALUES
     ('eeeeeeee-0000-0000-0000-000000000001', 'Hembra', 'Brahman',   '2020-03-12', NULL,                                   NULL, 'dddddddd-0000-0000-0000-000000000001', 'Nacido en finca'),
