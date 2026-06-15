@@ -94,6 +94,7 @@ class Lotes(UUIDMixin,TimeStampedMixin):
         if not self.activo and self.pk and self.bovinos.exists():
             raise ValidationError("No se puede desactivar el lote porque tiene bovinos asociados.")
 
+
     def __str__(self):
         return self.nombre
     
@@ -139,6 +140,7 @@ class Bovinos(UUIDMixin,TimeStampedMixin):
             raise ValidationError(
                 f"Este bovino está marcado como '{self.estado_actual()}' y no puede ser modificado."
             )
+
         if self.origen == 'Nacimiento propio':
             errores = {}
             if not self.madre:

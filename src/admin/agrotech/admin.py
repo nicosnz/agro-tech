@@ -51,10 +51,24 @@ class PotrerosAdmin(admin.ModelAdmin):
 @admin.register(Lotes)
 class LotesAdmin(admin.ModelAdmin):
     inlines=[BovinosInline,AlimentacionInline]
-    list_display=('nombre','tipo','cantidad_animales','fecha_creacion','activo')
+    list_display=('nombre','tipo','cantidad_animales','fecha_creacion','activo','potrero')
     search_fields=('nombre',)
     list_filter=('tipo','activo')
     readonly_fields=('creado_en','actualizado_en','cantidad_animales')
+
+    def _advertir_capacidad(self, request, potrero):
+        total = sum(l.cantidad_animales for l in potrero.lote.all())
+        if total > potrero.capacidad:
+            self.message_user(
+                request,
+                f"El potrero '{potrero.nombre}' superó su capacidad ({total}/{potrero.capacidad} animales). "
+                f"Se recomienda mover algunos animales a otro potrero.",
+                level=messages.WARNING,
+            )
+
+    def save_model(self, request, obj, form, change):
+        super().save_model(request, obj, form, change)
+        self._advertir_capacidad(request, obj.potrero)
 
     def delete_model(self, request, obj):
         try:
@@ -65,6 +79,7 @@ class LotesAdmin(admin.ModelAdmin):
                 f"No se puede eliminar el lote '{obj.nombre}' porque tiene bovinos asociados.",
                 level=messages.ERROR,
             )
+
 @admin.register(Bovinos)
 class BovinosAdmin(admin.ModelAdmin):
     inlines=[EstadoBovinoInline,PesajesInline]
@@ -74,7 +89,20 @@ class BovinosAdmin(admin.ModelAdmin):
     list_filter=('sexo','raza','lote','origen')
     readonly_fields=('creado_en','actualizado_en')
 
-    def get_readonly_fields(self, obj=None):
+    def save_model(self, request, obj, form, change):
+        super().save_model(request, obj, form, change)
+        if obj.lote:
+            potrero = obj.lote.potrero
+            total = sum(l.cantidad_animales for l in potrero.lote.all())
+            if total > potrero.capacidad:
+                self.message_user(
+                    request,
+                    f"El potrero '{potrero.nombre}' superó su capacidad ({total}/{potrero.capacidad} animales). "
+                    f"Se recomienda mover algunos animales a otro potrero.",
+                    level=messages.WARNING,
+                )
+
+    def get_readonly_fields(self, request, obj=None):
         if obj and obj.estado_actual() in Bovinos.ESTADOS_BLOQUEADOS:
             return [f.name for f in obj._meta.fields]
         return self.readonly_fields
