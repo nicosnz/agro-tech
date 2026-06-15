@@ -1,7 +1,13 @@
-from django.contrib import admin
-from .models import Medicamentos,TipoAlimentos,Potreros,Lotes
+from django.contrib import admin, messages
+from django.db.models import ProtectedError
+from .models import Medicamentos,TipoAlimentos,Potreros,Lotes,Bovinos
 # Register your models here.
-
+class BovinosInline(admin.TabularInline):
+    model = Bovinos
+    extra=0
+class LotesInline(admin.TabularInline):
+    model=Lotes
+    extra=0
 @admin.register(Medicamentos)
 class MedicamentosAdmin(admin.ModelAdmin):
     list_display=('nombre','dosis_recomendada','precio_display','disponible')
@@ -28,13 +34,32 @@ class TipoAlimentosAdmin(admin.ModelAdmin):
     
 @admin.register(Potreros)
 class PotrerosAdmin(admin.ModelAdmin):
+    inlines=[LotesInline]
     list_display=('nombre','capacidad','ubicacion','estado')
     search_fields=('nombre',)
     list_filter=('estado',)
     readonly_fields=('creado_en','actualizado_en')
 @admin.register(Lotes)
 class LotesAdmin(admin.ModelAdmin):
+    inlines=[BovinosInline]
     list_display=('nombre','tipo','cantidad_animales','fecha_creacion','activo')
     search_fields=('nombre',)
     list_filter=('tipo','activo')
+    readonly_fields=('creado_en','actualizado_en')
+
+    def delete_model(self, request, obj):
+        try:
+            obj.delete()
+        except ProtectedError:
+            self.message_user(
+                request,
+                f"No se puede eliminar el lote '{obj.nombre}' porque tiene bovinos asociados.",
+                level=messages.ERROR,
+            )
+@admin.register(Bovinos)
+class BovinosAdmin(admin.ModelAdmin):
+    autocomplete_fields=['lote']
+    list_display=('sexo','raza','fecha_nacimiento','lote','origen')
+    search_fields=('id',)
+    list_filter=('sexo','raza','lote','origen')
     readonly_fields=('creado_en','actualizado_en')

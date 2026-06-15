@@ -58,13 +58,13 @@ CREATE TABLE content.Lote (
 
 CREATE TABLE content.Bovino (
     id       UUID PRIMARY KEY,
-    sexo            VARCHAR(10),
-    raza            VARCHAR(100),
+    sexo            VARCHAR(10) CHECK (sexo IN ('Macho','Hembra')),
+    raza            VARCHAR(100) CHECK (raza IN ('Nelore','Brangus','Brahman')),
     fecha_nacimiento DATE,
     id_madre        UUID REFERENCES content.Bovino(id),
     id_padre        UUID REFERENCES content.Bovino(id),
     id_lote         UUID REFERENCES content.Lote(id),
-    origen          VARCHAR(100),
+    origen          VARCHAR(100) CHECK (origen IN ('Comprado','Nacimiento propio')),
     creado_en TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     actualizado_en TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 
