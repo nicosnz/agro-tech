@@ -78,7 +78,7 @@ class Lotes(UUIDMixin,TimeStampedMixin):
     TIPOS = [
         ("Nacimiento", "Nacimiento"),
         ("Recria", "Recria"),
-        ("Engore", "Engorde")
+        ("Engorde", "Engorde")
     ]
     nombre=models.CharField(db_column="nombre",max_length=100,null=False,unique=True)
     tipo = models.CharField(
@@ -237,16 +237,20 @@ class Alimentacion(UUIDMixin,TimeStampedMixin):
     
     
     def clean(self):
-        if self.alimento_id and self.cantidad:
+        if self._state.adding and self.alimento_id and self.cantidad:
+            if not self.alimento.disponible:
+                raise ValidationError(f"El alimento '{self.alimento.nombre}' no está disponible.")
             if self.cantidad > self.alimento.cantidad_restante:
                 raise ValidationError(
                     f"Cantidad insuficiente. Solo hay {self.alimento.cantidad_restante} kg disponibles de '{self.alimento.nombre}'."
                 )
 
     def save(self, *args, **kwargs):
+        is_new = self._state.adding
         super().save(*args, **kwargs)
-        self.alimento.cantidad_restante -= self.cantidad
-        self.alimento.save(update_fields=['cantidad_restante'])
+        if is_new:
+            self.alimento.cantidad_restante -= self.cantidad
+            self.alimento.save(update_fields=['cantidad_restante'])
 
     def __str__(self):
         return f"{self.lote} - {self.fecha_alimentacion}"
