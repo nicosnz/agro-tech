@@ -72,3 +72,27 @@ class Potreros(UUIDMixin,TimeStampedMixin):
         db_table='"content"."potrero"'
         verbose_name="Potrero"
         verbose_name_plural="Potreros"
+        
+class Lotes(UUIDMixin,TimeStampedMixin):
+    TIPOS = [
+        ("Nacimiento", "Nacimiento"),
+        ("Recria", "Recria"),
+        ("Engore", "Engorde")
+    ]
+    nombre=models.CharField(db_column="nombre",max_length=100,null=False,unique=True)
+    tipo = models.CharField(
+        max_length=20,
+        choices=TIPOS,
+    )
+    cantidad_animales=models.IntegerField(validators=[MinValueValidator(1)],db_column="cantidad_animales",null=False)
+    fecha_creacion = models.DateField(null=False)
+    activo=models.BooleanField(default=True)
+    potrero = models.ForeignKey("Potreros",on_delete=models.PROTECT,db_column="id_potrero",related_name="lote")
+    def __str__(self):
+        return self.nombre
+    
+    class Meta:
+        managed=False
+        db_table='"content"."lote"'
+        verbose_name="Lote"
+        verbose_name_plural="Lotes"

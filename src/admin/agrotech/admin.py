@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Medicamentos,TipoAlimentos,Potreros
+from .models import Medicamentos,TipoAlimentos,Potreros,Lotes
 # Register your models here.
 
 @admin.register(Medicamentos)
@@ -31,4 +31,10 @@ class PotrerosAdmin(admin.ModelAdmin):
     list_display=('nombre','capacidad','ubicacion','estado')
     search_fields=('nombre',)
     list_filter=('estado',)
+    readonly_fields=('creado_en','actualizado_en')
+@admin.register(Lotes)
+class LotesAdmin(admin.ModelAdmin):
+    list_display=('nombre','tipo','cantidad_animales','fecha_creacion','activo')
+    search_fields=('nombre',)
+    list_filter=('tipo','activo')
     readonly_fields=('creado_en','actualizado_en')
