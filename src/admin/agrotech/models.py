@@ -281,8 +281,15 @@ class Vacunacion(UUIDMixin,TimeStampedMixin):
     medicamento=models.ForeignKey("Medicamentos",on_delete=models.PROTECT,db_column='id_medicamento',related_name='vacunacion_medicamento')
     fecha_aplicacion=models.DateField(auto_now_add=True)
     animal=models.ForeignKey('Bovinos',on_delete=models.PROTECT,db_column='id_animal',related_name='vacunacion_animal')
-    dosis=models.DecimalField(db_column="dosis",max_digits=5,decimal_places=2,validators=[MinValueValidator(Decimal('0.01'))],help_text="Kg.")
+    dosis=models.DecimalField(db_column="dosis",max_digits=5,decimal_places=2,validators=[MinValueValidator(Decimal('0.01'))])
     observacion=models.TextField(db_column="observacion",null=True)
+
+    def clean(self):
+        if self._state.adding and self.medicamento_id and not self.medicamento.disponible:
+            raise ValidationError(
+                f"El medicamento '{self.medicamento.nombre}' no está disponible."
+            )
+
     def __str__(self):
         return f"{self.fecha_aplicacion} - {self.medicamento}"
 
