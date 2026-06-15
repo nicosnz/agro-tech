@@ -18,6 +18,7 @@ services:
       - agrovolume:/var/lib/postgresql/data
     networks:
       - agrotech-public
+    restart: always
 volumes:
   agrovolume:
 networks:
