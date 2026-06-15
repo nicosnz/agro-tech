@@ -45,7 +45,7 @@ class LotesAdmin(admin.ModelAdmin):
     list_display=('nombre','tipo','cantidad_animales','fecha_creacion','activo')
     search_fields=('nombre',)
     list_filter=('tipo','activo')
-    readonly_fields=('creado_en','actualizado_en')
+    readonly_fields=('creado_en','actualizado_en','cantidad_animales')
 
     def delete_model(self, request, obj):
         try:

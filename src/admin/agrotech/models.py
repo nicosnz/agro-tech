@@ -85,7 +85,7 @@ class Lotes(UUIDMixin,TimeStampedMixin):
         max_length=20,
         choices=TIPOS,
     )
-    cantidad_animales=models.IntegerField(validators=[MinValueValidator(1)],db_column="cantidad_animales",null=False)
+    cantidad_animales=models.IntegerField(db_column="cantidad_animales", default=0, editable=False)
     fecha_creacion = models.DateField(null=False)
     activo=models.BooleanField(default=True)
     potrero = models.ForeignKey("Potreros",on_delete=models.PROTECT,db_column="id_potrero",related_name="lote")
@@ -127,6 +127,29 @@ class Bovinos(UUIDMixin,TimeStampedMixin):
     padre=models.ForeignKey("self",null=True,blank=True,on_delete=models.SET_NULL,related_name='hijos_padre',db_column='id_padre')
     lote = models.ForeignKey("Lotes",on_delete=models.PROTECT,db_column="id_lote",related_name="bovinos")
     origen=models.CharField(max_length=20,choices=ORIGENES,null=False)
+
+    def _actualizar_conteo(self, lote):
+        if lote:
+            lote.cantidad_animales = lote.bovinos.count()
+            lote.save(update_fields=['cantidad_animales'])
+
+    def save(self, *args, **kwargs):
+        lote_anterior = None
+        if self.pk:
+            try:
+                lote_anterior = Bovinos.objects.get(pk=self.pk).lote
+            except Bovinos.DoesNotExist:
+                pass
+        super().save(*args, **kwargs)
+        self._actualizar_conteo(self.lote)
+        if lote_anterior and lote_anterior != self.lote:
+            self._actualizar_conteo(lote_anterior)
+
+    def delete(self, *args, **kwargs):
+        lote = self.lote
+        super().delete(*args, **kwargs)
+        self._actualizar_conteo(lote)
+
     def __str__(self):
         return f"{self.id} - {self.raza} - {self.sexo}"
     
