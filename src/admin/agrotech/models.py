@@ -209,3 +209,20 @@ class EstadosBovinos(UUIDMixin,TimeStampedMixin):
         db_table='"content"."estadoanimal"'
         verbose_name="Estado Animal"
         verbose_name_plural="Estados Animal"
+        
+class Pesajes(UUIDMixin,TimeStampedMixin):
+    fecha_pesaje = models.DateField(null=False,auto_now_add=True)
+    peso=models.DecimalField(db_column="peso",max_digits=6,decimal_places=2,validators=[MinValueValidator(Decimal('0.01'))],help_text="Kg.")
+    bovino = models.ForeignKey("Bovinos",on_delete=models.PROTECT,db_column="id_animal",related_name="pesajes")
+
+
+    
+    
+    def __str__(self):
+        return f"{self.fecha_pesaje} - {self.peso}"
+
+    class Meta:
+        managed=False
+        db_table='"content"."pesaje"'
+        verbose_name="Pesaje"
+        verbose_name_plural="Pesajes"

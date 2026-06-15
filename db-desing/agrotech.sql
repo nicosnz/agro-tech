@@ -73,7 +73,7 @@ CREATE TABLE content.Bovino (
 CREATE TABLE content.Pesaje (
     id    UUID PRIMARY KEY,
     fecha_pesaje DATE NOT NULL,
-    peso         NUMERIC(8,2),
+    peso         NUMERIC(6,2),
     id_animal    UUID NOT NULL REFERENCES content.Bovino(id),
     creado_en TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     actualizado_en TIMESTAMP DEFAULT CURRENT_TIMESTAMP
