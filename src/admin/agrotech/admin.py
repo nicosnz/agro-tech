@@ -1,6 +1,6 @@
 from django.contrib import admin, messages
 from django.db.models import ProtectedError
-from .models import Medicamentos,TipoAlimentos,Potreros,Lotes,Bovinos,EstadosBovinos,Pesajes
+from .models import Medicamentos,TipoAlimentos,Potreros,Lotes,Bovinos,EstadosBovinos,Pesajes,Alimentacion
 # Register your models here.
 class BovinosInline(admin.TabularInline):
     model = Bovinos
@@ -14,6 +14,9 @@ class EstadoBovinoInline(admin.TabularInline):
 class PesajesInline(admin.TabularInline):
     model=Pesajes
     extra=0
+class AlimentacionInline(admin.TabularInline):
+    model = Alimentacion
+    extra = 0
 @admin.register(Medicamentos)
 class MedicamentosAdmin(admin.ModelAdmin):
     list_display=('nombre','dosis_recomendada','precio_display','disponible')
@@ -47,7 +50,7 @@ class PotrerosAdmin(admin.ModelAdmin):
     readonly_fields=('creado_en','actualizado_en')
 @admin.register(Lotes)
 class LotesAdmin(admin.ModelAdmin):
-    inlines=[BovinosInline]
+    inlines=[BovinosInline,AlimentacionInline]
     list_display=('nombre','tipo','cantidad_animales','fecha_creacion','activo')
     search_fields=('nombre',)
     list_filter=('tipo','activo')
@@ -71,7 +74,7 @@ class BovinosAdmin(admin.ModelAdmin):
     list_filter=('sexo','raza','lote','origen')
     readonly_fields=('creado_en','actualizado_en')
 
-    def get_readonly_fields(self, request, obj=None):
+    def get_readonly_fields(self, obj=None):
         if obj and obj.estado_actual() in Bovinos.ESTADOS_BLOQUEADOS:
             return [f.name for f in obj._meta.fields]
         return self.readonly_fields
@@ -81,6 +84,7 @@ class EstadoBovinosAdmin(admin.ModelAdmin):
     list_display=('bovino','estado','fecha_registro','descripcion')
     list_filter=('estado',)
     readonly_fields=('creado_en','actualizado_en')
+    
 @admin.register(Pesajes)
 class PesajesAdmin(admin.ModelAdmin):
     list_display=('fecha_pesaje','peso_display','bovino')
@@ -89,3 +93,13 @@ class PesajesAdmin(admin.ModelAdmin):
     @admin.display(description='Peso')
     def peso_display(self, obj):
         return f"{obj.peso} .kg"
+    
+@admin.register(Alimentacion)
+class AlimentacionAdmin(admin.ModelAdmin):
+    list_display=('fecha_alimentacion','cantidad','alimento','lote')
+    search_fields=('fecha_alimentacion',)
+    readonly_fields=('fecha_alimentacion','creado_en','actualizado_en')
+    list_filter=('alimento',)
+    @admin.display(description='Cantidad')
+    def cantidad_display(self,obj):
+        return f"{obj.cantidad} .kg"
