@@ -226,3 +226,33 @@ class Pesajes(UUIDMixin,TimeStampedMixin):
         db_table='"content"."pesaje"'
         verbose_name="Pesaje"
         verbose_name_plural="Pesajes"
+        
+class Alimentacion(UUIDMixin,TimeStampedMixin):
+    fecha_alimentacion = models.DateField(null=False,auto_now_add=True)
+    cantidad=models.DecimalField(db_column="cantidad",max_digits=5,decimal_places=2,validators=[MinValueValidator(Decimal('0.01'))],help_text="Kg.")
+    alimento = models.ForeignKey("TipoAlimentos",on_delete=models.PROTECT,db_column="id_tipo_alimento",related_name="alimentacion_tipo")
+    lote = models.ForeignKey("Lotes",on_delete=models.PROTECT,db_column="id_lote",related_name="alimentacion_lote")
+
+
+    
+    
+    def clean(self):
+        if self.alimento_id and self.cantidad:
+            if self.cantidad > self.alimento.cantidad_restante:
+                raise ValidationError(
+                    f"Cantidad insuficiente. Solo hay {self.alimento.cantidad_restante} kg disponibles de '{self.alimento.nombre}'."
+                )
+
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+        self.alimento.cantidad_restante -= self.cantidad
+        self.alimento.save(update_fields=['cantidad_restante'])
+
+    def __str__(self):
+        return f"{self.lote} - {self.fecha_alimentacion}"
+
+    class Meta:
+        managed=False
+        db_table='"content"."alimentacion"'
+        verbose_name="Alimentacion"
+        verbose_name_plural="Alimentaciones"
