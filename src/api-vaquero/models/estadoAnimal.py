@@ -1,7 +1,7 @@
 from sqlmodel import SQLModel,Field,Relationship
 from enum import Enum
 from decimal import Decimal
-from sqlalchemy import Column,String,Text,Numeric
+from sqlalchemy import Column,String,Text,Numeric,Enum as SAEnum
 from datetime import datetime,date
 from typing import Optional,TYPE_CHECKING
 import uuid
@@ -20,7 +20,7 @@ class EstadoAnimal(SQLModel,table=True):
     __table_args__={'schema':'content'}
 
     id: uuid.UUID = Field(default_factory=uuid.uuid4,primary_key=True,index=True)
-    estado:Estado
+    estado: Estado = Field(sa_type=SAEnum(Estado, values_callable=lambda x: [e.value for e in x]))
     descripcion:Optional[str] = Field(default=None,sa_type=Text)
     fecha_registro:date
     id_animal:uuid.UUID = Field(foreign_key='content.bovino.id')
