@@ -226,7 +226,7 @@ class EstadosBovinos(UUIDMixin,TimeStampedMixin):
         
 class Pesajes(UUIDMixin,TimeStampedMixin):
     fecha_pesaje = models.DateField(null=False,auto_now_add=True)
-    peso=models.DecimalField(db_column="peso",max_digits=6,decimal_places=2,validators=[MinValueValidator(Decimal('0.01'))],help_text="Kg.")
+    peso=models.DecimalField(db_column="peso",max_digits=5,decimal_places=2,validators=[MinValueValidator(Decimal('0.01'))],help_text="Kg.")
     bovino = models.ForeignKey("Bovinos",on_delete=models.PROTECT,db_column="id_animal",related_name="pesajes")
 
 
