@@ -35,8 +35,8 @@ class GetAllBovinos:
     def __init__(self, repository: BovinoRepository):
         self.repository = repository
 
-    async def getAll(self) -> List[BovinoResponseGetAll]:
-        rows = await self.repository.get_all()
+    async def getAll(self, pagina: int = 1) -> List[BovinoResponseGetAll]:
+        rows = await self.repository.get_all(pagina)
 
         resultado = []
         for bovino, lote, peso, fecha_pesaje, estado in rows:

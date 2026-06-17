@@ -20,7 +20,7 @@ class BovinoRepository(BaseRepository[Bovino]):
     async def get_by_id(self, id: UUID) -> Optional[Bovino]:
         return await self.session.get(Bovino, id)
 
-    async def get_all(self) -> List:
+    async def get_all(self, pagina: int = 1) -> List:
         ultimo_pesaje = (
             select(Pesaje)
             .distinct(Pesaje.id_animal)
@@ -46,6 +46,8 @@ class BovinoRepository(BaseRepository[Bovino]):
             .join(Lote, Bovino.id_lote == Lote.id, isouter=True)
             .join(ultimo_pesaje, ultimo_pesaje.c.id_animal == Bovino.id, isouter=True)
             .join(ultimo_estado, ultimo_estado.c.id_animal == Bovino.id, isouter=True)
+            .offset((pagina - 1) * 8)
+            .limit(8)
         )
 
         result = await self.session.exec(query)
