@@ -88,36 +88,7 @@
   gap: 4px;
 }
 
-.ganado-table__pagination {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 12px 24px;
-  border-bottom: 1px solid #e5e7eb;
-}
 
-.pagination__btn {
-  padding: 6px 14px;
-  font-size: 13px;
-  background: #f3f4f6;
-  color: #374151;
-  border: 1px solid #e5e7eb;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: background 150ms;
-}
-
-.pagination__btn:hover:not(:disabled) { background: #e5e7eb; }
-
-.pagination__btn:disabled {
-  opacity: 0.4;
-  cursor: default;
-}
-
-.pagination__info {
-  font-size: 13px;
-  color: #6b7280;
-}
 
 .ganado-table__wrapper {
   overflow-x: auto;
@@ -201,25 +172,7 @@
 
 
 
-/* estado-badge */
-.estado-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 5px;
-  font-size: 11px;
-  font-weight: 600;
-  border-radius: 6px;
-  padding: 3px 8px;
-  letter-spacing: 0.02em;
-  white-space: nowrap;
-}
 
-.estado-badge__dot {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  flex-shrink: 0;
-}
 
 /* lote-badge */
 .lote-badge {

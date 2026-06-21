@@ -7,7 +7,7 @@ interface Props{
 }
 
 
-export const StastBovino = ({bovinos}:Props) => {
+export const StatsBovino = ({bovinos}:Props) => {
     const stats = [
         { label: "Total Ganado",   value: bovinos.length, color: "#111827" },
         { label: "Sanos",        value: bovinos.filter((b) => b.estado_actual.estado === "Sano").length,        color: "#15803d" },
