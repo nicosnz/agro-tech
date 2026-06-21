@@ -1,7 +1,13 @@
 export function calcularEdad(fechaNacimiento: Date): string {
-  const diff = Date.now() - new Date(fechaNacimiento).getTime();
-  const years = Math.floor(diff / (1000 * 60 * 60 * 24 * 365.25));
-  if (years >= 1) return `${years} año${years !== 1 ? "s" : ""}`;
-  const months = Math.floor(diff / (1000 * 60 * 60 * 24 * 30.44));
-  return `${months} mes${months !== 1 ? "es" : ""}`;
+  const hoy = new Date();
+  const nacimiento = new Date(fechaNacimiento);
+
+  let años = hoy.getFullYear() - nacimiento.getFullYear();
+  let meses = hoy.getMonth() - nacimiento.getMonth();
+
+  if (meses < 0) { años--; meses += 12; }
+
+  if (años === 0) return `${meses} mes${meses !== 1 ? "es" : ""}`;
+  if (meses === 0) return `${años} año${años !== 1 ? "s" : ""}`;
+  return `${años} año${años !== 1 ? "s" : ""} y ${meses} mes${meses !== 1 ? "es" : ""}`;
 }
