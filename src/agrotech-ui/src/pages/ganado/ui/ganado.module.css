@@ -1,4 +1,3 @@
-/* ganado-page */
 .ganado-page {
   background: #f8faf9;
   min-height: 100%;
@@ -45,33 +44,8 @@
 
 .ganado-page__error { color: #dc2626; }
 
-/* stats */
-.stats {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 16px;
-}
 
-.stats__card {
-  background: #fff;
-  border: 1px solid #e5e7eb;
-  border-radius: 16px;
-  padding: 16px;
-}
 
-.stats__label {
-  font-size: 12px;
-  color: #9ca3af;
-  font-weight: 500;
-  margin: 0 0 8px;
-}
-
-.stats__value {
-  font-size: 40px;
-  font-weight: 800;
-  line-height: 1;
-  margin: 0;
-}
 
 /* ganado-table */
 .ganado-table {
@@ -225,25 +199,7 @@
   color: #fff;
 }
 
-/* search */
-.search {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  border: 1px solid #d1d5db;
-  border-radius: 8px;
-  padding: 7px 12px;
-  background: #fff;
-}
 
-.search__input {
-  border: none;
-  outline: none;
-  font-size: 13px;
-  color: #374151;
-  background: transparent;
-  width: 160px;
-}
 
 /* estado-badge */
 .estado-badge {
