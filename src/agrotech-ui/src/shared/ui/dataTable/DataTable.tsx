@@ -6,10 +6,11 @@ interface Props<T> {
   datos: T[];
   renderizarFila: (item: T) => ReactNode;
   keyExtractor: (item: T) => string | number;
+  rowClassName?: (item: T, idx: number) => string | undefined;
   empty?: string;
 }
 
-export const DataTable = <T,>({ columnas, datos, renderizarFila, keyExtractor, empty }: Props<T>) => (
+export const DataTable = <T,>({ columnas, datos, renderizarFila, keyExtractor, rowClassName, empty }: Props<T>) => (
   <div className={styles["data-table__wrapper"]}>
     <table className={styles["data-table"]}>
       <thead>
@@ -33,7 +34,7 @@ export const DataTable = <T,>({ columnas, datos, renderizarFila, keyExtractor, e
           : datos.map((item, idx) => (
             <tr
               key={keyExtractor(item)}
-              className={`${styles["data-table__row"]} ${idx % 2 !== 0 ? styles["data-table__row--alt"] : ""}`}
+              className={`${styles["data-table__row"]} ${idx % 2 !== 0 ? styles["data-table__row--alt"] : ""} ${rowClassName?.(item, idx) ?? ""}`}
             >
               {renderizarFila(item)}
             </tr>

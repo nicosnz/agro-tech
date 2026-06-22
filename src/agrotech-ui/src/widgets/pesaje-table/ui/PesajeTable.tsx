@@ -54,6 +54,13 @@ export const PesajeTable = () => {
           datos={filtered}
           keyExtractor={(b) => b.id}
           empty="No se encontraron pesajes."
+          rowClassName={(b) => {
+            if (!b.peso_actual || !b.peso_anterior) return undefined;
+            const diff = parseFloat(b.peso_actual.peso) - parseFloat(b.peso_anterior.peso);
+            if (diff > 0) return styles["pesaje-table__row--sube"];
+            if (diff < 0) return styles["pesaje-table__row--baja"];
+            return undefined;
+          }}
           renderizarFila={(bovino) => (
             <>
               <td className={`${tableStyles["data-table__td"]} ${styles["pesaje-table__td--id"]}`}>{bovino.id}</td>
