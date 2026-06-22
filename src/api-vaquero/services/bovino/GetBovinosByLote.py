@@ -11,8 +11,7 @@ from repositories.pesajeRepository import get_pesaje_repository, PesajeRepositor
 from repositories.estadoAnimalRepository import get_estado_animal_repository, EstadoAnimalRepository
 
 
-class LoteResumen(BaseModel):
-    nombre: str
+
 
 
 class PesajeResumen(BaseModel):
@@ -24,17 +23,16 @@ class EstadoResumen(BaseModel):
     estado: Estado
 
 
-class BovinoResponseGetAll(BaseModel):
+class BovinoResponseByLote(BaseModel):
     id: uuid.UUID
     raza: RazaBovinos
     fecha_nacimiento: date
-    lote: Optional[LoteResumen]
     peso_actual: Optional[PesajeResumen]
     peso_anterior: Optional[PesajeResumen]
     estado_actual: Optional[EstadoResumen]
 
 
-class GetAllBovinos:
+class GetBovinosByLote:
     def __init__(
         self,
         bovino_repo: BovinoRepository,
@@ -45,18 +43,16 @@ class GetAllBovinos:
         self.pesaje_repo = pesaje_repo
         self.estado_repo = estado_repo
 
-    async def getAll(self, pagina: int = 1) -> List[BovinoResponseGetAll]:
-        bovinos = await self.bovino_repo.get_all(pagina)
+    async def get(self, id_lote: uuid.UUID) -> List[BovinoResponseByLote]:
+        bovinos = await self.bovino_repo.get_by_lote(id_lote)
 
-        ids = [bovino.id for bovino, _ in bovinos]
+        ids = [bovino.id for bovino in bovinos]
 
         pesajes = await self.pesaje_repo.get_ultimos_dos_por_animales(ids)
         estados = await self.estado_repo.get_ultimo_por_animales(ids)
 
         resultado = []
-        for bovino, lote in bovinos:
-            lote_resumen = LoteResumen(nombre=lote.nombre) if lote else None
-
+        for bovino in bovinos:
             pesajes_animal = pesajes.get(bovino.id, [])
             peso_actual = PesajeResumen(peso=pesajes_animal[0]['peso'], fecha_pesaje=pesajes_animal[0]['fecha_pesaje']) if len(pesajes_animal) >= 1 else None
             peso_anterior = PesajeResumen(peso=pesajes_animal[1]['peso'], fecha_pesaje=pesajes_animal[1]['fecha_pesaje']) if len(pesajes_animal) >= 2 else None
@@ -64,11 +60,10 @@ class GetAllBovinos:
             estado_row = estados.get(bovino.id)
             estado_actual = EstadoResumen(estado=estado_row['estado']) if estado_row else None
 
-            resultado.append(BovinoResponseGetAll(
+            resultado.append(BovinoResponseByLote(
                 id=bovino.id,
                 raza=bovino.raza,
                 fecha_nacimiento=bovino.fecha_nacimiento,
-                lote=lote_resumen,
                 peso_actual=peso_actual,
                 peso_anterior=peso_anterior,
                 estado_actual=estado_actual,
@@ -77,9 +72,9 @@ class GetAllBovinos:
         return resultado
 
 
-def get_all_bovinos(
+def get_bovinos_by_lote(
     bovino_repo: BovinoRepository = Depends(get_bovino_repository),
     pesaje_repo: PesajeRepository = Depends(get_pesaje_repository),
     estado_repo: EstadoAnimalRepository = Depends(get_estado_animal_repository),
 ):
-    return GetAllBovinos(bovino_repo, pesaje_repo, estado_repo)
+    return GetBovinosByLote(bovino_repo, pesaje_repo, estado_repo)

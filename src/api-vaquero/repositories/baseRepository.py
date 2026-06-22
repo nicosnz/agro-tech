@@ -1,4 +1,3 @@
-# repositories/base.py
 from abc import ABC, abstractmethod
 from typing import Generic, TypeVar, Optional, List
 from uuid import UUID
@@ -19,10 +18,4 @@ class BaseRepository(ABC, Generic[T]):
     async def create(self, entity: T) -> T:
         raise NotImplementedError
 
-    @abstractmethod
-    async def update(self, entity: T) -> T:
-        raise NotImplementedError
-
-    @abstractmethod
-    async def delete(self, id: UUID) -> None:
-        raise NotImplementedError
+    
