@@ -19,7 +19,7 @@ class PesajeRepository:
                 Pesaje,
                 func.row_number().over(
                     partition_by=Pesaje.id_animal,
-                    order_by=desc(Pesaje.fecha_pesaje)
+                    order_by=[desc(Pesaje.fecha_pesaje), desc(Pesaje.creado_en)]
                 ).label('rn')
             )
             .where(Pesaje.id_animal.in_(ids))
