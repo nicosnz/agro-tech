@@ -1,0 +1,57 @@
+.ganado-table {
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+.ganado-table__controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 24px;
+  border-bottom: 1px solid #e5e7eb;
+  gap: 16px;
+}
+
+.ganado-table__title {
+  font-size: 16px;
+  font-weight: 600;
+  color: #111827;
+  margin: 0;
+}
+
+.ganado-table__count {
+  font-size: 13px;
+  color: #6b7280;
+  margin: 0;
+}
+
+.ganado-table__filters {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.ganado-table__td--id {
+  font-weight: 600;
+  color: #14532d;
+}
+
+.ver-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 5px 10px;
+  background: #f0fdf4;
+  border: 1px solid #bbf7d0;
+  color: #15803d;
+  font-size: 12px;
+  font-weight: 600;
+  border-radius: 8px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 150ms;
+}
+
+.ver-btn:hover { background: #dcfce7; }
