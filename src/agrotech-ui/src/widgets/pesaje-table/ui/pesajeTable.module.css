@@ -36,13 +36,17 @@
   color: #6b7280;
   white-space: nowrap;
 }
-
+.pesaje-table__td--pesoactual {
+  color: #111827;
+  font-weight: bolder;
+  white-space: nowrap;
+}
 .pesaje-table__row--sube {
   border-left: 3px solid #16a34a;
-  border-bottom-color: #bbf7d0;
+  border-bottom: 2px solid #bbf7d0;
 }
 
 .pesaje-table__row--baja {
   border-left: 3px solid #dc2626;
-  border-bottom-color: #fca5a5;
+  border-bottom: 3px solid #fca5a5;
 }

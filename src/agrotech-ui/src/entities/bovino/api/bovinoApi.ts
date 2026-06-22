@@ -1,4 +1,4 @@
-import { apiClient } from '../../../shared/api/clienteHttp'
+import { apiClient } from '@/shared/api/clienteHttp'
 import type { Bovino } from '../model/types'
 
 export const bovinoApi = {
@@ -6,8 +6,9 @@ export const bovinoApi = {
     const res = await apiClient.get('/api/v1/bovinos/', { params: { pagina } })
     return Array.isArray(res.data) ? res.data : []
   },
-//   getById: async (id: string) => {
-//     const res = await apiClient.get<Bovino>(`/bovinos/${id}`)
-//     return res.data
-//   },
+  getBovinoByLote: async (id_lote: string): Promise<Bovino[]> => {
+    const res = await apiClient.get('/api/v1/bovinos/by-lote/',{params: {id_lote}})
+    return Array.isArray(res.data) ? res.data : []
+
+  },
 }

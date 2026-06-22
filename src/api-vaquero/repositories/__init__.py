@@ -1,0 +1,6 @@
+from repositories.baseRepository import BaseRepository
+from repositories.bovinoRepository import BovinoRepository
+from repositories.pesajeRepository import PesajeRepository
+from repositories.estadoAnimalRepository import EstadoAnimalRepository
+from repositories.loteRepository import LoteRepository
+from repositories.potreroRepository import PotreroRepository
