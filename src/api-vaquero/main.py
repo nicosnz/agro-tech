@@ -2,7 +2,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from models import *
 from repositories import *
-from api.v1 import bovinos,lotes,potreros
+from api.v1 import bovinos,lotes,potreros,pesajes
 
 app = FastAPI(
     title='API Agrotech',
@@ -20,6 +20,7 @@ app.add_middleware(
 app.include_router(bovinos.router, prefix='/api/v1/bovinos', tags=['Bovinos'])
 app.include_router(lotes.router, prefix='/api/v1/lotes', tags=['Lotes'])
 app.include_router(potreros.router, prefix='/api/v1/potreros', tags=['Potreros'])
+app.include_router(pesajes.router, prefix='/api/v1/pesajes', tags=['Pesajes'])
 
 
 @app.get("/api/v1/healthz")

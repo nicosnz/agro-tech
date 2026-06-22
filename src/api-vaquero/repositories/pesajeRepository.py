@@ -39,6 +39,11 @@ class PesajeRepository:
 
         return pesajes_por_animal
 
+    async def create(self,pesaje:Pesaje) -> Pesaje:
+        self.session.add(pesaje)
+        await self.session.commit()
+        await self.session.refresh(pesaje)
+        return pesaje
 
 def get_pesaje_repository(db: AsyncSession = Depends(get_db)):
     return PesajeRepository(db)
