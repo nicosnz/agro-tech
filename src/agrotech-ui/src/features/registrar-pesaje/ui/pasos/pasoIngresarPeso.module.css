@@ -1,0 +1,198 @@
+.paso-peso {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.paso-peso__card {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 16px;
+  background: #f9fafb;
+  border-radius: 14px;
+}
+
+.paso-peso__badge-num {
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  background: #dcfce7;
+  color: #15803d;
+  font-size: 13px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.paso-peso__info {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.paso-peso__top {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.paso-peso__id {
+  font-size: 15px;
+  font-weight: 700;
+  color: #111827;
+}
+
+.paso-peso__estado {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 12px;
+  font-weight: 500;
+  color: #15803d;
+  background: #f0fdf4;
+  border: 1px solid #bbf7d0;
+  border-radius: 20px;
+  padding: 2px 8px;
+}
+
+.paso-peso__dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #16a34a;
+}
+
+.paso-peso__detalle {
+  font-size: 13px;
+  color: #6b7280;
+}
+
+.paso-peso__campos {
+  display: flex;
+  align-items: flex-end;
+  gap: 12px;
+}
+
+.paso-peso__campo {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.paso-peso__label {
+  font-size: 13px;
+  color: #6b7280;
+  font-weight: 500;
+}
+
+.paso-peso__actual {
+  height: 56px;
+  background: #f3f4f6;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  padding: 0 16px;
+}
+
+.paso-peso__actual-valor {
+  font-size: 20px;
+  color: #374151;
+}
+
+.paso-peso__actual-valor strong {
+  font-size: 28px;
+  font-weight: 800;
+  color: #111827;
+  margin-right: 2px;
+}
+
+.paso-peso__flecha {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: #dcfce7;
+  color: #16a34a;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-bottom: 10px;
+}
+
+.paso-peso__input-wrapper {
+  height: 56px;
+  border: 1.5px solid #e5e7eb;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  padding: 0 16px;
+  gap: 4px;
+  transition: border-color 150ms;
+}
+
+.paso-peso__input-wrapper:focus-within {
+  border-color: #16a34a;
+}
+
+.paso-peso__input {
+  flex: 1;
+  border: none;
+  outline: none;
+  font-size: 20px;
+  color: #374151;
+  background: transparent;
+  width: 100%;
+}
+
+.paso-peso__unidad {
+  font-size: 14px;
+  color: #9ca3af;
+}
+
+.paso-peso__acciones {
+  display: flex;
+  gap: 12px;
+}
+
+.paso-peso__btn-cancelar {
+  flex: 1;
+  height: 52px;
+  border-radius: 14px;
+  border: 1.5px solid #e5e7eb;
+  background: #fff;
+  font-size: 15px;
+  font-weight: 600;
+  color: #374151;
+  cursor: pointer;
+  transition: background 150ms;
+}
+
+.paso-peso__btn-cancelar:hover {
+  background: #f9fafb;
+}
+
+.paso-peso__btn-confirmar {
+  flex: 1;
+  height: 52px;
+  border-radius: 14px;
+  border: none;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  background: #d1d5db;
+  color: #9ca3af;
+  transition: background 150ms, color 150ms;
+}
+
+.paso-peso__btn-confirmar--activo {
+  background: #16a34a;
+  color: #fff;
+}
+
+.paso-peso__btn-confirmar--activo:hover {
+  background: #15803d;
+}

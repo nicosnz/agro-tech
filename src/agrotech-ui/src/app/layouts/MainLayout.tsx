@@ -4,9 +4,7 @@ import styles from "./MainLayout.module.css";
 import {
   Beef,
   Scale,
-  Syringe,
   Wheat,
-  ClipboardList,
   ChevronRight,
   Menu,
   X,
@@ -15,9 +13,7 @@ import {
 const navItems: { to: string; label: string; icon: React.ReactNode }[] = [
   { to: "/ganado",        label: "Ganado",        icon: <Beef size={18} /> },
   { to: "/pesajes",       label: "Pesajes",        icon: <Scale size={18} /> },
-  { to: "/vacunas",       label: "Vacunas",        icon: <Syringe size={18} /> },
   { to: "/alimento",      label: "Alimentación",   icon: <Wheat size={18} /> },
-  { to: "/observaciones", label: "Observaciones",  icon: <ClipboardList size={18} /> },
 ];
 
 export const MainLayout = () => {

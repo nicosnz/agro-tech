@@ -11,8 +11,10 @@ import styles from './pesajeTable.module.css';
 
 const COLUMNAS = ["ID", "Edad", "Raza", "Peso Actual", "Peso Anterior", "Variación", "Último Pesaje"];
 
-const formatFecha = (fecha: Date | string) =>
-  new Date(fecha).toLocaleDateString("es-CO", { day: "2-digit", month: "2-digit", year: "numeric" });
+const formatFecha = (fecha: Date | string) => {
+  const d = typeof fecha === "string" ? fecha.replace(/-/g, "/") : fecha;
+  return new Date(d).toLocaleDateString("es-CO", { day: "2-digit", month: "2-digit", year: "numeric" });
+};
 
 export const PesajeTable = () => {
   const {
