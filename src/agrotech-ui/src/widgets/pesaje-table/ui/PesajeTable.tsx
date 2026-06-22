@@ -66,7 +66,7 @@ export const PesajeTable = () => {
               <td className={`${tableStyles["data-table__td"]} ${styles["pesaje-table__td--id"]}`}>{bovino.id}</td>
               <td className={tableStyles["data-table__td"]}>{calcularEdad(bovino.fecha_nacimiento)}</td>
               <td className={tableStyles["data-table__td"]}>{bovino.raza}</td>
-              <td className={tableStyles["data-table__td"]}>{bovino.peso_actual ? `${bovino.peso_actual.peso} kg` : "—"}</td>
+              <td className={tableStyles["data-table__td"]} > <span className={styles['pesaje-table__td--pesoactual']}>{bovino.peso_actual ? `${bovino.peso_actual.peso} kg` : "—"}</span></td>
               <td className={tableStyles["data-table__td"]}>{bovino.peso_anterior ? `${bovino.peso_anterior.peso} kg` : "—"}</td>
               <td className={tableStyles["data-table__td"]}>
                 <VariacionPeso actual={bovino.peso_actual} anterior={bovino.peso_anterior} />

@@ -94,7 +94,7 @@ CREATE TABLE content.Vacunacion (
 
 CREATE TABLE content.EstadoAnimal (
     id      UUID PRIMARY KEY,
-    estado         VARCHAR(100) NOT NULL,
+    estado         VARCHAR(100) NOT NULL CHECK (estado IN ('En observacion','En tratamiento','Fallecido','Sano','Vendido')),
     descripcion    TEXT,
     fecha_registro DATE NOT NULL,
     id_animal      UUID NOT NULL REFERENCES content.Bovino(id),
