@@ -1,4 +1,4 @@
-import type { Lote } from '@/entities/bovino/model/types'
+import type { Lote } from '@/entities/lote/model/types'
 import { apiClient } from '@/shared/api/clienteHttp'
 
 export const loteApi = {
