@@ -1,0 +1,18 @@
+.variacion--sube,
+.variacion--baja,
+.variacion--neutral {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.variacion--sube    { color: #15803d; }
+.variacion--baja    { color: #dc2626; }
+.variacion--neutral { color: #9ca3af; }
+
+.variacion__pct {
+  font-size: 11px;
+  opacity: 0.8;
+}

@@ -1,8 +1,11 @@
+import type { Peso } from "@/entities/pesaje/model/types";
+
 export interface Bovino {
     id:               string;
     raza:             string;
     lote:             Lote;
-    peso_actual:      PesoActual | null;
+    peso_actual:      Peso | null;
+    peso_anterior:      Peso | null;
     estado_actual:    EstadoActual;
     fecha_nacimiento: Date;
 }
@@ -15,7 +18,3 @@ export interface Lote {
     nombre: string;
 }
 
-export interface PesoActual {
-    peso:         string;
-    fecha_pesaje: Date;
-}
