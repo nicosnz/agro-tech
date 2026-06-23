@@ -2,7 +2,7 @@ from typing import List, Optional
 import uuid
 from datetime import date,datetime
 from decimal import Decimal
-from pydantic import BaseModel,Field,field_validator
+from pydantic import BaseModel,field_validator
 from fastapi import Depends
 from repositories.pesajeRepository import get_pesaje_repository,PesajeRepository,Pesaje
 from pydantic import BaseModel

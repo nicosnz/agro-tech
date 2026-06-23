@@ -11,7 +11,7 @@ interface Props{
 export const Badge = ({estado,bg,border,color,dot}:Props) => {
   return (
     <span className={styles["estado-badge"]} style={{ background: bg, border: `1px solid ${border}`, color: color }}>
-      <span className={styles["estado-badge__dot"]} style={{ background: dot }} />
+      {dot && <span className={styles["estado-badge__dot"]} style={{ background: dot }} />}
       {estado}
     </span>
   )

@@ -1,0 +1,68 @@
+.alimento-card {
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 16px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.alimento-card__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  width: 100%;
+}
+
+.alimento-card__nombre {
+  font-size: 16px;
+  font-weight: 700;
+  color: #111827;
+}
+
+.alimento-card__precio {
+  font-size: 15px;
+  font-weight: 700;
+  color: #15803d;
+  white-space: nowrap;
+}
+
+.alimento-card__sin-costo {
+  font-size: 13px;
+  color: #9ca3af;
+  white-space: nowrap;
+}
+
+.alimento-card__descripcion {
+  font-size: 13px;
+  color: #9ca3af;
+  margin: 0;
+}
+
+.alimento-card__stock {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 4px;
+  width: 100%;
+}
+
+.alimento-card__stock-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.alimento-card__stock-label {
+  font-size: 13px;
+  color: #6b7280;
+}
+
+.alimento-card__stock-valor {
+  font-size: 14px;
+  font-weight: 700;
+  color: #111827;
+}
