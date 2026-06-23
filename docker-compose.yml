@@ -1,14 +1,14 @@
 services:
   database:
     image: postgres:16
-    ports:
-      - "5432:5432"
+    expose:
+      - "5432"
     environment:
       - POSTGRES_USER=${POSTGRES_USER}
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
       - POSTGRES_DB=${POSTGRES_DB}
     healthcheck:
-      test: ["CMD-SHELL","pg_isready -U $POSTGRES_USER -d $POSTGRES_DB"]
+      test: ["CMD-SHELL", "pg_isready -U $POSTGRES_USER -d $POSTGRES_DB"]
       interval: 10s
       timeout: 5s
       retries: 3
@@ -17,10 +17,63 @@ services:
       - ./db-desing:/docker-entrypoint-initdb.d
       - agrovolume:/var/lib/postgresql/data
     networks:
+      - agrotech-private
+    restart: always
+  admin:
+    build: ./src/admin
+    expose:
+      - "8000"
+    networks:
+      - agrotech-private
+    env_file:
+      - .env
+    restart: always
+    depends_on:
+      database:
+        condition: service_healthy
+    volumes:
+      - static_volume:/app/staticfiles
+      - media_volume:/app/media
+  vaquero:
+    build: ./src/api-vaquero
+    expose:
+      - "8001"
+    networks:
+      - agrotech-private
+    restart: always
+    depends_on:
+      database:
+        condition: service_healthy
+
+    env_file:
+      - .env
+  proxy:
+    build:
+      context: ./src/agrotech-ui
+      args:
+        VITE_API_URL: ${VITE_API_URL}
+    ports:
+      - "80:80"
+    networks:
+      - agrotech-private
       - agrotech-public
     restart: always
+    depends_on:
+      vaquero:
+        condition: service_healthy
+      admin:
+        condition: service_started
+    volumes:
+      - ./proxy-reverse:/etc/nginx/conf.d
+      - static_volume:/app/staticfiles
+      - media_volume:/app/media
+
 volumes:
   agrovolume:
+  static_volume:
+  media_volume:
 networks:
   agrotech-public:
     internal: false
+  agrotech-private:
+    internal: true
