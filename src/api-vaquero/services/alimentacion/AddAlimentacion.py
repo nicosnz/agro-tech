@@ -12,7 +12,7 @@ from repositories.tipoAlimentoRepository import TipoAlimentoRepository, get_tipo
 class AlimentacionRequest(BaseModel):
     id_tipo_alimento: UUID
     cantidad: Decimal
-    observacion: Optional[str]
+    observacion: Optional[str] = None
     id_lote: UUID
 
 
