@@ -13,7 +13,7 @@ import {
 const navItems: { to: string; label: string; icon: React.ReactNode }[] = [
   { to: "/ganado",        label: "Ganado",        icon: <Beef size={18} /> },
   { to: "/pesajes",       label: "Pesajes",        icon: <Scale size={18} /> },
-  { to: "/alimento",      label: "Alimentación",   icon: <Wheat size={18} /> },
+  { to: "/alimentacion",      label: "Alimentación",   icon: <Wheat size={18} /> },
 ];
 
 export const MainLayout = () => {
