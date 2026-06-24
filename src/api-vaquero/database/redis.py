@@ -29,3 +29,14 @@ async def close_redis():
 
 def get_redis() -> Redis | None:
     return _client
+
+
+async def invalidar_cache_bovinos(redis: Redis | None) -> None:
+    if not redis:
+        return
+    try:
+        keys = await redis.keys("bovinos:pagina:*")
+        if keys:
+            await redis.delete(*keys)
+    except Exception:
+        logger.warning("Redis: no se pudo invalidar el caché de bovinos")
