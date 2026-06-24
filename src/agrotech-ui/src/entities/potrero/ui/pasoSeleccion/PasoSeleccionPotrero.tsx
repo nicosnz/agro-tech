@@ -1,5 +1,3 @@
-import { useState } from "react";
-import { SearchInput } from "@/shared/ui/searchInput/SearchInput";
 import type { Potrero } from "@/entities/potrero/model/types";
 import styles from "./PasoSeleccionPotrero.module.css";
 
@@ -24,29 +22,18 @@ const ArrowRightIcon = () => (
 );
 
 export const PasoSeleccionPotrero = ({ potreros, loading, onSelect }: Props) => {
-  const [search, setSearch] = useState("");
-
-  const filtrados = potreros.filter((p) =>
-    p.nombre.toLowerCase().includes(search.toLowerCase())
-  );
-
   return (
     <div className={styles["paso-potrero"]}>
-      <SearchInput
-        valueSearch={search}
-        onChange={(e) => setSearch(e.target.value)}
-      />
-
       <ul className={styles["paso-potrero__lista"]}>
         {loading && (
           <li className={styles["paso-potrero__empty"]}>Cargando potreros...</li>
         )}
 
-        {!loading && filtrados.length === 0 && (
+        {!loading && potreros.length === 0 && (
           <li className={styles["paso-potrero__empty"]}>No se encontraron potreros.</li>
         )}
 
-        {!loading && filtrados.map((potrero) => (
+        {!loading && potreros.map((potrero) => (
           <li key={potrero.id}>
             <button className={styles["paso-potrero__item"]} onClick={() => onSelect(potrero)}>
               <div className={styles["paso-potrero__icono"]}>

@@ -15,11 +15,11 @@ export const BovinoCard = ({ bovino }: Props) => (
   <div className={styles['bovino-card']}>
     <div className={styles['bovino-card__header']}>
       <span className={styles['bovino-card__id']}>{numericId(bovino.id)}</span>
-      <BadgeEstado estado={bovino.estado_actual.estado} />
+      <BadgeEstado estado={bovino.estado_actual?.estado ?? "—"} />
     </div>
 
     <div className={styles['bovino-card__meta']}>
-      <BadgeLote lote={bovino.lote.nombre} />
+      <BadgeLote lote={bovino.lote?.nombre ?? "—"} />
       <span className={styles['bovino-card__raza']}>{bovino.raza}</span>
     </div>
 

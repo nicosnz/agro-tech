@@ -2,11 +2,14 @@ import uuid
 from datetime import date, datetime
 from decimal import Decimal
 from pydantic import BaseModel, field_validator
-from fastapi import Depends
+from fastapi import Depends, HTTPException, status
 from redis.asyncio import Redis
 from repositories.pesajeRepository import get_pesaje_repository, PesajeRepository, Pesaje
 from repositories.elasticBovinoRepository import ElasticBovinoRepository, get_elastic_bovino_repository
+from repositories.estadoAnimalRepository import get_estado_animal_repository, EstadoAnimalRepository
 from database.redis import get_redis, invalidar_cache_bovinos
+
+ESTADOS_BLOQUEADOS = {"Fallecido", "Vendido"}
 
 
 class PesajeRequest(BaseModel):
@@ -28,13 +31,23 @@ class AddPesaje:
         self,
         pesaje_repo: PesajeRepository,
         elastic_repo: ElasticBovinoRepository,
+        estado_repo: EstadoAnimalRepository,
         redis: Redis | None = None,
     ):
         self.pesaje_repo  = pesaje_repo
         self.elastic_repo = elastic_repo
+        self.estado_repo  = estado_repo
         self.redis        = redis
 
     async def create(self, pesaje_request: PesajeRequest) -> Pesaje:
+        estados = await self.estado_repo.get_ultimo_por_animales([pesaje_request.id])
+        estado_row = estados.get(pesaje_request.id)
+        if estado_row and estado_row['estado'] in ESTADOS_BLOQUEADOS:
+            raise HTTPException(
+                status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
+                detail=f"No se puede registrar un pesaje para un bovino con estado '{estado_row['estado']}'.",
+            )
+
         pesaje = Pesaje(
             id_animal=pesaje_request.id,
             peso=pesaje_request.peso,
@@ -58,6 +71,7 @@ class AddPesaje:
 def get_add_pesaje(
     pesaje_repo:  PesajeRepository        = Depends(get_pesaje_repository),
     elastic_repo: ElasticBovinoRepository = Depends(get_elastic_bovino_repository),
+    estado_repo:  EstadoAnimalRepository  = Depends(get_estado_animal_repository),
     redis:        Redis | None            = Depends(get_redis),
 ):
-    return AddPesaje(pesaje_repo, elastic_repo, redis)
+    return AddPesaje(pesaje_repo, elastic_repo, estado_repo, redis)

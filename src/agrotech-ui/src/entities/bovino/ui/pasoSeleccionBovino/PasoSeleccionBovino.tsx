@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import { SearchInput } from "@/shared/ui/searchInput/SearchInput";
 import { bovinoApi } from "@/entities/bovino/api/bovinoApi";
 import { calcularEdad } from "@/shared/lib/calcularEdad";
 import type { Lote } from "@/entities/lote/model/types";
@@ -12,11 +11,9 @@ interface Props {
   onSelect: (bovino: Bovino) => void;
 }
 
-
 export const PasoSeleccionBovino = ({ lote, onSelect }: Props) => {
   const [bovinos, setBovinos] = useState<Bovino[]>([]);
   const [loading, setLoading] = useState(false);
-  const [search, setSearch]   = useState("");
 
   useEffect(() => {
     setLoading(true);
@@ -25,32 +22,18 @@ export const PasoSeleccionBovino = ({ lote, onSelect }: Props) => {
       .finally(() => setLoading(false));
   }, [lote.id]);
 
-  const filtrados = bovinos.filter((b) => {
-    const q = search.toLowerCase();
-    return (
-      b.id.toLowerCase().includes(q) ||
-      b.raza.toLowerCase().includes(q) ||
-      calcularEdad(b.fecha_nacimiento).toLowerCase().includes(q)
-    );
-  });
-
   return (
     <div className={styles["paso-bovino"]}>
-      <SearchInput
-        valueSearch={search}
-        onChange={(e) => setSearch(e.target.value)}
-      />
-
       <ul className={styles["paso-bovino__lista"]}>
         {loading && (
           <li className={styles["paso-bovino__empty"]}>Cargando animales...</li>
         )}
 
-        {!loading && filtrados.length === 0 && (
+        {!loading && bovinos.length === 0 && (
           <li className={styles["paso-bovino__empty"]}>No se encontraron animales.</li>
         )}
 
-        {!loading && filtrados.map((bovino) => (
+        {!loading && bovinos.map((bovino) => (
           <li key={bovino.id}>
             <button className={styles["paso-bovino__item"]} onClick={() => onSelect(bovino)}>
               <div className={styles["paso-bovino__badge-num"]}>
@@ -61,7 +44,7 @@ export const PasoSeleccionBovino = ({ lote, onSelect }: Props) => {
                   <span className={styles["paso-bovino__id"]}>{numericId(bovino.id)}</span>
                   <span className={styles["paso-bovino__estado"]}>
                     <span className={styles["paso-bovino__dot"]} />
-                    {bovino.estado_actual.estado}
+                    {bovino.estado_actual?.estado ?? "—"}
                   </span>
                 </div>
                 <span className={styles["paso-bovino__detalle"]}>

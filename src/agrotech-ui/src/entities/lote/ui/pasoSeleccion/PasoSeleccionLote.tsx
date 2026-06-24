@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import { SearchInput } from "@/shared/ui/searchInput/SearchInput";
 import { loteApi } from "@/entities/lote/api/loteApi";
 import type { Potrero } from "@/entities/potrero/model/types";
 import type { Lote } from "@/entities/lote/model/types";
@@ -28,7 +27,6 @@ const ArrowRightIcon = () => (
 export const PasoSeleccionLote = ({ potrero, onSelect }: Props) => {
   const [lotes, setLotes]     = useState<Lote[]>([]);
   const [loading, setLoading] = useState(false);
-  const [search, setSearch]   = useState("");
 
   useEffect(() => {
     setLoading(true);
@@ -37,24 +35,18 @@ export const PasoSeleccionLote = ({ potrero, onSelect }: Props) => {
       .finally(() => setLoading(false));
   }, [potrero.id]);
 
-  const filtrados = lotes.filter((l) =>
-    l.nombre.toLowerCase().includes(search.toLowerCase())
-  );
-
   return (
     <div className={styles["paso-lote"]}>
-      <SearchInput valueSearch={search} onChange={(e) => setSearch(e.target.value)} />
-
       <ul className={styles["paso-lote__lista"]}>
         {loading && (
           <li className={styles["paso-lote__empty"]}>Cargando lotes...</li>
         )}
 
-        {!loading && filtrados.length === 0 && (
+        {!loading && lotes.length === 0 && (
           <li className={styles["paso-lote__empty"]}>No se encontraron lotes.</li>
         )}
 
-        {!loading && filtrados.map((lote) => (
+        {!loading && lotes.map((lote) => (
           <li key={lote.id}>
             <button className={styles["paso-lote__item"]} onClick={() => onSelect(lote)}>
               <div className={styles["paso-lote__icono"]}>

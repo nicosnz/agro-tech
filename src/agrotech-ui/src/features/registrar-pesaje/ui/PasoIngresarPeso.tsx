@@ -31,7 +31,7 @@ export const PasoIngresarPeso = ({ bovino, peso, onPesoChange, onConfirmar, onCa
             <span className={styles["paso-peso__id"]}>{bovino.id}</span>
             <span className={styles["paso-peso__estado"]}>
               <span className={styles["paso-peso__dot"]} />
-              {bovino.estado_actual.estado}
+              {bovino.estado_actual?.estado ?? "—"}
             </span>
           </div>
           <span className={styles["paso-peso__detalle"]}>
