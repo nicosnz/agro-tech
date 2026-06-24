@@ -23,7 +23,7 @@ export const GanadoTable = () => {
     pagina,
     setPagina,
     search,
-    setSearch,
+    handleSearch,
     estados,
     filterEstado,
     setFilterEstado,
@@ -48,7 +48,7 @@ export const GanadoTable = () => {
               filtroActivo={filterEstado}
               onFiltrar={setFilterEstado}
             />
-            <SearchInput valueSearch={search} onChange={(e) => setSearch(e.target.value)} />
+            <SearchInput valueSearch={search} onChange={(e) => handleSearch(e.target.value)} />
           </div>
         </div>
 

@@ -16,13 +16,12 @@ const COLUMNAS = ["ID", "Edad", "Raza", "Peso Actual", "Peso Anterior", "Variaci
 export const PesajeTable = () => {
   const {
     bovinos,
-    filtered,
     loading,
     error,
     pagina,
     setPagina,
     search,
-    setSearch,
+    handleSearch
   } = usePesajeTable();
 
   if (loading) return <Loading />;
@@ -36,9 +35,14 @@ export const PesajeTable = () => {
         <div className={styles["pesaje-table__controls"]}>
           <div>
             <h2 className={styles["pesaje-table__title"]}>Pesos registrados</h2>
-            <p className={styles["pesaje-table__count"]}>{filtered.length} de {bovinos.length} animales</p>
+            <p className={styles["pesaje-table__count"]}>{bovinos.length} de {bovinos.length} animales</p>
           </div>
-          <SearchInput valueSearch={search} onChange={(e) => setSearch(e.target.value)} />
+          <SearchInput valueSearch={search} onChange={(e) => handleSearch(e.target.value)} />
+          <input
+            type="date"
+            onBlur={(e) => e.target.value && handleSearch(e.target.value)}
+            className={styles["pesaje-table__date-input"]}
+          />
         </div>
 
         <Pagination
@@ -51,7 +55,7 @@ export const PesajeTable = () => {
         <div className={styles["pesaje-table__desktop"]}>
           <DataTable
             columnas={COLUMNAS}
-            datos={filtered}
+            datos={bovinos}
             keyExtractor={(b) => b.id}
             empty="No se encontraron pesajes."
             rowClassName={(b) => {
@@ -80,9 +84,9 @@ export const PesajeTable = () => {
         </div>
 
         <div className={styles["pesaje-table__card-list"]}>
-          {filtered.length === 0
+          {bovinos.length === 0
             ? <p className={styles["pesaje-table__empty-cards"]}>No se encontraron pesajes.</p>
-            : filtered.map((bovino) => <PesajeCard key={bovino.id} bovino={bovino} />)
+            : bovinos.map((bovino) => <PesajeCard key={bovino.id} bovino={bovino} />)
           }
         </div>
       </div>

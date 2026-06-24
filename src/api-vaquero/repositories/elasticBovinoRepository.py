@@ -14,7 +14,7 @@ class ElasticBovinoRepository:
             "query": {
                 "multi_match": {
                     "query": q,
-                    "fields": ["raza", "sexo", "origen", "lote_nombre"]
+                    "fields": ["raza", "sexo", "origen", "lote_nombre","fecha_peso_actual"]
                 }
             }
         }

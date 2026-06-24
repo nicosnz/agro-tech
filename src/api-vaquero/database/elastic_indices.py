@@ -29,7 +29,7 @@ BOVINOS_MAPPING = {
             "fecha_nacimiento":    {"type": "date"},
             "lote_nombre":         {"type": "text"},
             "peso_actual":         {"type": "float"},
-            "fecha_peso_actual":   {"type": "date"},
+            "fecha_peso_actual":   {"type": "keyword"},
             "peso_anterior":       {"type": "float"},
             "fecha_peso_anterior": {"type": "date"},
             "estado_actual":       {"type": "keyword", "normalizer": "lowercase_normalizer"},

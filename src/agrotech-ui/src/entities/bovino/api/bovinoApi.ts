@@ -11,4 +11,9 @@ export const bovinoApi = {
     return Array.isArray(res.data) ? res.data : []
 
   },
+  getBovinoBySearch: async (query: string): Promise<Bovino[]> => {
+    const res = await apiClient.get('/api/v1/bovinos/search/',{params: {query}})
+    return Array.isArray(res.data) ? res.data : []
+
+  },
 }
