@@ -69,7 +69,6 @@ export const PasoSeleccionLote = ({ potrero, onSelect }: Props) => {
           </li>
         ))}
       </ul>
-
     </div>
   );
 };

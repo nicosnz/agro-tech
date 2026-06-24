@@ -2,10 +2,12 @@ import { useState } from "react";
 import { PesajeTable } from "@/widgets/pesaje-table/ui/PesajeTable";
 import { ButtonAdd } from "@/shared/ui/buttonAdd/ButtonAdd";
 import { ModalRegistrarPesaje } from "@/features/registrar-pesaje/ui/ModalRegistrarPesaje";
+import { Toast } from "@/shared/ui/toast/Toast";
 import styles from "./Pesajes.module.css";
 
 export const Pesajes = () => {
   const [showModal, setShowModal] = useState(false);
+  const [showToast, setShowToast] = useState(false);
 
   return (
     <div className={styles["pesajes-page"]}>
@@ -21,7 +23,18 @@ export const Pesajes = () => {
         <PesajeTable />
       </div>
 
-      <ModalRegistrarPesaje isOpen={showModal} onClose={() => setShowModal(false)} />
+      <ModalRegistrarPesaje
+        isOpen={showModal}
+        onClose={() => setShowModal(false)}
+        onSuccess={() => setShowToast(true)}
+      />
+
+      {showToast && (
+        <Toast
+          mensaje="Pesaje registrado exitosamente"
+          onClose={() => setShowToast(false)}
+        />
+      )}
     </div>
   );
 };

@@ -65,7 +65,7 @@ services:
       admin:
         condition: service_started
     volumes:
-      - ./proxy-reverse:/etc/nginx/conf.d
+      - ./proxy-reverse/default.conf:/etc/nginx/conf.d/default.conf
       - static_volume:/app/staticfiles
       - media_volume:/app/media
 

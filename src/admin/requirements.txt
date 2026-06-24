@@ -2,3 +2,4 @@ django==5.2.15
 flake8==6.1.0
 psycopg[binary]==3.3.3
 gunicorn==21.1.0
+elasticsearch==8.13.0

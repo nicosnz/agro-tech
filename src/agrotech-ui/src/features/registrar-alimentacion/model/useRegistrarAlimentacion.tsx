@@ -13,14 +13,14 @@ interface FormData {
 }
 
 export const useRegistrarAlimentacion = () => {
-  const [error, setError] = useState<string|null>(null)
-  const [paso, setPaso]                               = useState<Paso>(1);
-  const [potreros, setPotreros]                       = useState<Potrero[]>([]);
-  const [loadingPotreros, setLoadingPotreros]         = useState(false);
-  const [potreroSeleccionado, setPotreroSeleccionado] = useState<Potrero | null>(null);
-  const [loteSeleccionado, setLoteSeleccionado]       = useState<Lote | null>(null);
-  const [formData, setFormData]                       = useState<FormData>({ id_tipo_alimento: "", cantidad: "", observacion: "" });
-  const [submitting, setSubmitting]                   = useState(false);
+  const [error, setError]                               = useState<string | null>(null);
+  const [paso, setPaso]                                 = useState<Paso>(1);
+  const [potreros, setPotreros]                         = useState<Potrero[]>([]);
+  const [loadingPotreros, setLoadingPotreros]           = useState(false);
+  const [potreroSeleccionado, setPotreroSeleccionado]   = useState<Potrero | null>(null);
+  const [loteSeleccionado, setLoteSeleccionado]         = useState<Lote | null>(null);
+  const [formData, setFormData]                         = useState<FormData>({ id_tipo_alimento: "", cantidad: "", observacion: "" });
+  const [submitting, setSubmitting]                     = useState(false);
 
   useEffect(() => {
     setLoadingPotreros(true);
@@ -83,6 +83,7 @@ export const useRegistrarAlimentacion = () => {
     reset,
     submit,
     submitting,
-    error,setError
+    error,
+    setError,
   };
 };
