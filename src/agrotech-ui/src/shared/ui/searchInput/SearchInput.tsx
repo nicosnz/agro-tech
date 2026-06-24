@@ -15,7 +15,7 @@ function SearchIcon() {
 }
 
 export const SearchInput = ({onChange,valueSearch}:Props) => {
-
+  
   return (
     <div className={styles["search-input"]}>
       <span className={styles["search-input__icon"]}>

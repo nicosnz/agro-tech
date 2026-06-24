@@ -1,13 +1,24 @@
+from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from models import *
 from repositories import *
 from api.v1 import bovinos,lotes,potreros,pesajes,tipoAlimento,alimentacion
+from database.elastic_indices import create_indices, sync_bovinos
+
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    await create_indices()
+    await sync_bovinos()
+    yield
+
 
 app = FastAPI(
     title='API Agrotech',
     description='API para el negocio Agrotech',
-    version='1.0.0'
+    version='1.0.0',
+    lifespan=lifespan
 )
 
 app.add_middleware(

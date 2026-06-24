@@ -9,26 +9,33 @@ export const usePesajeTable = () => {
   const [pagina, setPagina]    = useState(1);
   const [search, setSearch]    = useState('');
 
-  useEffect(() => {
-    setLoading(true);
-    bovinoApi.getAll(pagina)
-      .then(setBovinos)
-      .catch(() => setError("Error al cargar los pesajes"))
-      .finally(() => setLoading(false));
-  }, [pagina]);
+ useEffect(() => {
+    const timeoutId = setTimeout(() => {
+      setLoading(true);
 
-  const filtered = bovinos.filter((b) => {
-    const q = search.toLowerCase();
-    return (
-      b.id.toLowerCase().includes(q) ||
-      b.raza.toLowerCase().includes(q)
-    );
-  });
+      const llamada = search.trim()
+        ? bovinoApi.getBovinoBySearch(search)
+        : bovinoApi.getAll(pagina);
+
+      llamada
+        .then(setBovinos)
+        .catch(() => setError("Error al cargar el ganado"))
+        .finally(() => setLoading(false));
+
+    }, search.trim() ? 700 : 0);
+
+    return () => clearTimeout(timeoutId);
+  }, [search, pagina]);
+  const handleSearch = (value: string) => {
+      setSearch(value);
+      setPagina(1);
+    };
+  
 
   return {
     bovinos,
-    filtered,
     loading,
+    handleSearch,
     error,
     pagina,
     setPagina,

@@ -2,7 +2,8 @@ from fastapi import APIRouter, Depends
 from typing import List
 from uuid import UUID
 from services.bovino.GetAllBovinos import get_all_bovinos, GetAllBovinos, BovinoResponseGetAll
-from services.bovino.GetBovinosByLote import get_bovinos_by_lote, GetBovinosByLote,BovinoResponseByLote
+from services.bovino.GetBovinosByLote import get_bovinos_by_lote, GetBovinosByLote, BovinoResponseByLote
+from services.bovino.SearchBovinos import get_search_bovinos, SearchBovinos
 
 router = APIRouter()
 
@@ -13,3 +14,7 @@ async def getAll(pagina: int = 1, service: GetAllBovinos = Depends(get_all_bovin
 @router.get('/by-lote', response_model=List[BovinoResponseByLote])
 async def getByLote(id_lote: UUID, service: GetBovinosByLote = Depends(get_bovinos_by_lote)):
     return await service.get(id_lote)
+
+@router.get('/search', response_model=List[BovinoResponseGetAll])
+async def search(query: str, service: SearchBovinos = Depends(get_search_bovinos)):
+    return await service.search(query)
