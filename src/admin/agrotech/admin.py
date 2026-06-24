@@ -1,27 +1,28 @@
 from django.contrib import admin, messages
 from django.db.models import ProtectedError
+from unfold.admin import ModelAdmin, TabularInline
 from .models import Medicamentos,TipoAlimentos,Potreros,Lotes,Bovinos,EstadosBovinos,Pesajes,Alimentacion,Vacunacion
-# Register your models here.
-class BovinosInline(admin.TabularInline):
+
+class BovinosInline(TabularInline):
     model = Bovinos
     extra=0
-class LotesInline(admin.TabularInline):
+class LotesInline(TabularInline):
     model=Lotes
     extra=0
-class EstadoBovinoInline(admin.TabularInline):
+class EstadoBovinoInline(TabularInline):
     model=EstadosBovinos
     extra=0
-class PesajesInline(admin.TabularInline):
+class PesajesInline(TabularInline):
     model=Pesajes
     extra=0
-class AlimentacionInline(admin.TabularInline):
+class AlimentacionInline(TabularInline):
     model = Alimentacion
     extra = 0
-class VacunacionInline(admin.TabularInline):
+class VacunacionInline(TabularInline):
     model=Vacunacion
     extra=0
 @admin.register(Medicamentos)
-class MedicamentosAdmin(admin.ModelAdmin):
+class MedicamentosAdmin(ModelAdmin):
     list_display=('nombre','dosis_recomendada','precio_display','disponible')
     search_fields=('nombre',)
     readonly_fields=('creado_en','actualizado_en')
@@ -31,7 +32,7 @@ class MedicamentosAdmin(admin.ModelAdmin):
         return f"Bs. {obj.precio}"
 
 @admin.register(TipoAlimentos)
-class TipoAlimentosAdmin(admin.ModelAdmin):
+class TipoAlimentosAdmin(ModelAdmin):
     list_display=('nombre','precio_display','cantidad_restante_display','disponible')
     search_fields=('nombre',)
     readonly_fields=('creado_en','actualizado_en')
@@ -45,14 +46,14 @@ class TipoAlimentosAdmin(admin.ModelAdmin):
         return f"{obj.cantidad_restante} kg"
     
 @admin.register(Potreros)
-class PotrerosAdmin(admin.ModelAdmin):
+class PotrerosAdmin(ModelAdmin):
     inlines=[LotesInline]
     list_display=('nombre','capacidad','ubicacion','estado')
     search_fields=('nombre',)
     list_filter=('estado',)
     readonly_fields=('creado_en','actualizado_en')
 @admin.register(Lotes)
-class LotesAdmin(admin.ModelAdmin):
+class LotesAdmin(ModelAdmin):
     inlines=[BovinosInline,AlimentacionInline]
     list_display=('nombre','tipo','cantidad_animales','fecha_creacion','activo','potrero')
     search_fields=('nombre',)
@@ -84,7 +85,7 @@ class LotesAdmin(admin.ModelAdmin):
             )
 
 @admin.register(Bovinos)
-class BovinosAdmin(admin.ModelAdmin):
+class BovinosAdmin(ModelAdmin):
     inlines=[EstadoBovinoInline,PesajesInline,VacunacionInline]
     autocomplete_fields=['lote']
     list_display=('sexo','raza','fecha_nacimiento','lote','origen')
@@ -111,13 +112,13 @@ class BovinosAdmin(admin.ModelAdmin):
         return self.readonly_fields
     
 @admin.register(EstadosBovinos)
-class EstadoBovinosAdmin(admin.ModelAdmin):
+class EstadoBovinosAdmin(ModelAdmin):
     list_display=('bovino','estado','fecha_registro','descripcion')
     list_filter=('estado',)
     readonly_fields=('creado_en','actualizado_en')
     
 @admin.register(Pesajes)
-class PesajesAdmin(admin.ModelAdmin):
+class PesajesAdmin(ModelAdmin):
     list_display=('fecha_pesaje','peso_display','bovino')
     search_fields=('fecha_pesaje',)
     readonly_fields=('creado_en','actualizado_en','fecha_pesaje')
@@ -126,7 +127,7 @@ class PesajesAdmin(admin.ModelAdmin):
         return f"{obj.peso} .kg"
     
 @admin.register(Alimentacion)
-class AlimentacionAdmin(admin.ModelAdmin):
+class AlimentacionAdmin(ModelAdmin):
     list_display=('fecha_alimentacion','cantidad','alimento','lote')
     search_fields=('fecha_alimentacion',)
     readonly_fields=('fecha_alimentacion','creado_en','actualizado_en')
@@ -135,7 +136,7 @@ class AlimentacionAdmin(admin.ModelAdmin):
     def cantidad_display(self,obj):
         return f"{obj.cantidad} .kg"
 @admin.register(Vacunacion)
-class VacunacionAdmin(admin.ModelAdmin):
+class VacunacionAdmin(ModelAdmin):
     list_display=('fecha_aplicacion','medicamento','dosis')
     search_fields=('fecha_aplicacion',)
     readonly_fields=('fecha_aplicacion','creado_en','actualizado_en')
