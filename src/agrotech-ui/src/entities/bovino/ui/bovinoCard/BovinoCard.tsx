@@ -7,12 +7,11 @@ import { numericId } from '@/shared/lib/toNumericId';
 
 interface Props {
   bovino: Bovino;
-  onVerMas?: (bovino: Bovino) => void;
 }
 
 
 
-export const BovinoCard = ({ bovino, onVerMas }: Props) => (
+export const BovinoCard = ({ bovino }: Props) => (
   <div className={styles['bovino-card']}>
     <div className={styles['bovino-card__header']}>
       <span className={styles['bovino-card__id']}>{numericId(bovino.id)}</span>
@@ -37,10 +36,6 @@ export const BovinoCard = ({ bovino, onVerMas }: Props) => (
       </div>
     </div>
 
-    <div className={styles['bovino-card__footer']}>
-      <button className={styles['bovino-card__ver-btn']} onClick={() => onVerMas?.(bovino)}>
-        Ver más →
-      </button>
-    </div>
+    
   </div>
 );

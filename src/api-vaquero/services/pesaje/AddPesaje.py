@@ -3,8 +3,10 @@ from datetime import date, datetime
 from decimal import Decimal
 from pydantic import BaseModel, field_validator
 from fastapi import Depends
+from redis.asyncio import Redis
 from repositories.pesajeRepository import get_pesaje_repository, PesajeRepository, Pesaje
 from repositories.elasticBovinoRepository import ElasticBovinoRepository, get_elastic_bovino_repository
+from database.redis import get_redis, invalidar_cache_bovinos
 
 
 class PesajeRequest(BaseModel):
@@ -22,9 +24,15 @@ class PesajeRequest(BaseModel):
 
 
 class AddPesaje:
-    def __init__(self, pesaje_repo: PesajeRepository, elastic_repo: ElasticBovinoRepository):
+    def __init__(
+        self,
+        pesaje_repo: PesajeRepository,
+        elastic_repo: ElasticBovinoRepository,
+        redis: Redis | None = None,
+    ):
         self.pesaje_repo  = pesaje_repo
         self.elastic_repo = elastic_repo
+        self.redis        = redis
 
     async def create(self, pesaje_request: PesajeRequest) -> Pesaje:
         pesaje = Pesaje(
@@ -38,15 +46,18 @@ class AddPesaje:
 
         pesajes = await self.pesaje_repo.get_ultimos_dos_por_animales([pesaje_request.id])
         ultimos = pesajes.get(pesaje_request.id, [])
-        peso_actual  = ultimos[0] if len(ultimos) >= 1 else None
+        peso_actual   = ultimos[0] if len(ultimos) >= 1 else None
         peso_anterior = ultimos[1] if len(ultimos) >= 2 else None
         await self.elastic_repo.update_pesos_bovino(str(pesaje_request.id), peso_actual, peso_anterior)
+
+        await invalidar_cache_bovinos(self.redis)
 
         return pesaje
 
 
 def get_add_pesaje(
-    pesaje_repo:  PesajeRepository         = Depends(get_pesaje_repository),
-    elastic_repo: ElasticBovinoRepository  = Depends(get_elastic_bovino_repository),
+    pesaje_repo:  PesajeRepository        = Depends(get_pesaje_repository),
+    elastic_repo: ElasticBovinoRepository = Depends(get_elastic_bovino_repository),
+    redis:        Redis | None            = Depends(get_redis),
 ):
-    return AddPesaje(pesaje_repo, elastic_repo)
+    return AddPesaje(pesaje_repo, elastic_repo, redis)

@@ -73,9 +73,7 @@ export const GanadoTable = () => {
                 <td className={tableStyles["data-table__td"]}>{calcularEdad(bovino.fecha_nacimiento)}</td>
                 <td className={tableStyles["data-table__td"]}>{bovino.peso_actual ? `${bovino.peso_actual.peso} kg` : "—"}</td>
                 <td className={tableStyles["data-table__td"]}><BadgeEstado estado={bovino.estado_actual.estado} /></td>
-                <td className={tableStyles["data-table__td"]}>
-                  <button className={styles["ver-btn"]}>Ver más</button>
-                </td>
+                
               </>
             )}
           />
