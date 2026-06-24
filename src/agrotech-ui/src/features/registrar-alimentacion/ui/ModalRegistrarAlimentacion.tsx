@@ -1,7 +1,7 @@
 import { Modal } from "@/shared/ui/modal/Modal";
 import { PasoSeleccionPotrero } from "@/entities/potrero/ui/pasoSeleccion/PasoSeleccionPotrero";
 import { PasoSeleccionLote } from "@/entities/lote/ui/pasoSeleccion/PasoSeleccionLote";
-import { PasoIngresarAlimentacion } from "./pasos/PasoIngresarAlimentacion";
+import { PasoIngresarAlimentacion } from "./PasoIngresarAlimentacion";
 import { useRegistrarAlimentacion } from "../model/useRegistrarAlimentacion";
 
 interface Props {

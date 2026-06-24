@@ -1,4 +1,4 @@
-import styles from './searchInput.module.css';
+import styles from './SearchInput.module.css';
 
 interface Props{
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;

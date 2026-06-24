@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import styles from "./dataTable.module.css";
+import styles from "./DataTable.module.css";
 
 interface Props<T> {
   columnas: string[];
@@ -16,10 +16,11 @@ export const DataTable = <T,>({ columnas, datos, renderizarFila, keyExtractor, r
       <thead>
         <tr className={styles["data-table__head-row"]}>
           {columnas.map((col) => (
-            <th key={col} className={styles["data-table__th"]}>
-              <span className={styles["data-table__th-inner"]}>{col}</span>
-            </th>
-          ))}
+              <th key={col} className={styles["data-table__th"]}>
+                <span className={styles["data-table__th-inner"]}>{col}</span>
+              </th>
+            ))
+          }
         </tr>
       </thead>
       <tbody>

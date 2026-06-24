@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { SearchInput } from "@/shared/ui/searchInput/SearchInput";
 import type { Potrero } from "@/entities/potrero/model/types";
-import styles from "./pasoSeleccionPotrero.module.css";
+import styles from "./PasoSeleccionPotrero.module.css";
 
 interface Props {
   potreros: Potrero[];

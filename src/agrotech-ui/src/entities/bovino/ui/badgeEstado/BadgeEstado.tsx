@@ -1,4 +1,4 @@
-import { Badge } from "../../../../shared/ui/badge/Badge";
+import { Badge } from "@/shared/ui/badge/Badge";
 
 
 

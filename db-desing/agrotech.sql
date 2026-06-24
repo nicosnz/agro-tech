@@ -323,7 +323,12 @@ INSERT INTO content.EstadoAnimal (id, estado, descripcion, fecha_registro, id_an
     ('22222222-0000-0000-0000-000000000016', 'Sano',            'Ternero en buen estado, buen apetito',                  '2025-06-25', 'eeeeeeee-0000-0000-0000-00000000001b'),
     ('22222222-0000-0000-0000-000000000017', 'Sano',            'Animal en óptimas condiciones para engorde',            '2024-05-07', 'eeeeeeee-0000-0000-0000-00000000001d'),
     ('22222222-0000-0000-0000-000000000018', 'Sano',            'Sin novedad',                                           '2024-08-18', 'eeeeeeee-0000-0000-0000-00000000001e'),
-    ('22222222-0000-0000-0000-000000000019', 'En tratamiento',  'Parasitosis gastrointestinal moderada en tratamiento',  '2025-02-01', 'eeeeeeee-0000-0000-0000-00000000001f');
+    ('22222222-0000-0000-0000-000000000019', 'En tratamiento',  'Parasitosis gastrointestinal moderada en tratamiento',  '2025-02-01', 'eeeeeeee-0000-0000-0000-00000000001f'),
+    ('22222222-0000-0000-0000-00000000001a', 'Sano',            'Ternera en buen estado general',                        '2025-10-01', 'eeeeeeee-0000-0000-0000-00000000001c'),
+    ('22222222-0000-0000-0000-00000000001b', 'Sano',            'Ternera saludable en desarrollo',                       '2025-04-01', 'eeeeeeee-0000-0000-0000-000000000020'),
+    ('22222222-0000-0000-0000-00000000001c', 'Sano',            'Ternero en buen estado general',                        '2025-07-01', 'eeeeeeee-0000-0000-0000-000000000021'),
+    ('22222222-0000-0000-0000-00000000001d', 'Sano',            'Ternera sin novedad',                                   '2025-08-01', 'eeeeeeee-0000-0000-0000-000000000022'),
+    ('22222222-0000-0000-0000-00000000001e', 'Sano',            'Ternero sin novedad',                                   '2025-11-01', 'eeeeeeee-0000-0000-0000-000000000023');
 
 INSERT INTO content.Alimentacion (id, fecha_alimentacion, id_tipo_alimento, cantidad, observacion, id_lote) VALUES
     -- Lote Vientres B

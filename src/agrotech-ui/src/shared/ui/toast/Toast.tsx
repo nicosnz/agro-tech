@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import styles from "./toast.module.css";
+import styles from "./Toast.module.css";
 
 const CheckIcon = () => (
   <svg className={styles["toast__icono"]} viewBox="0 0 20 20" fill="none">

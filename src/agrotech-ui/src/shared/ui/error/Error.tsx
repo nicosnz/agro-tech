@@ -1,4 +1,4 @@
-import styles from './error.module.css'
+import styles from './Error.module.css'
 
 interface Props{
     error:string;

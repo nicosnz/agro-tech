@@ -1,4 +1,4 @@
-import styles from "./ganado.module.css";
+import styles from "./Ganado.module.css";
 import { GanadoTable } from "@/widgets/ganado-table/ui/GanadoTable";
 
 export const Ganado = () => {

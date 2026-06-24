@@ -1,7 +1,7 @@
 import { ProgressBar } from "@/shared/ui/progressBar/ProgressBar";
 import { BadgeAlimento } from "../badgeAlimento/BadgeAlimento";
 import type { TipoAlimento } from "../../model/types";
-import styles from "./alimentoCard.module.css";
+import styles from "./AlimentoCard.module.css";
 
 interface Props {
   alimento: TipoAlimento;

@@ -2,7 +2,7 @@ import { useState } from "react";
 import { PesajeTable } from "@/widgets/pesaje-table/ui/PesajeTable";
 import { ButtonAdd } from "@/shared/ui/buttonAdd/ButtonAdd";
 import { ModalRegistrarPesaje } from "@/features/registrar-pesaje/ui/ModalRegistrarPesaje";
-import styles from "./pesajes.module.css";
+import styles from "./Pesajes.module.css";
 
 export const Pesajes = () => {
   const [showModal, setShowModal] = useState(false);

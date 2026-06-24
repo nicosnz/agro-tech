@@ -1,9 +1,9 @@
-.filter-btns {
+.filters {
   display: flex;
   gap: 4px;
 }
 
-.filter-btn {
+.filters-btn {
   padding: 5px 10px;
   font-size: 12px;
   background: #f3f4f6;
@@ -15,7 +15,7 @@
   white-space: nowrap;
 }
 
-.filter-btn--active {
+.filters-btn--active {
   background: #16a34a;
   color: #fff;
 }
