@@ -6,13 +6,16 @@ from models import *
 from repositories import *
 from api.v1 import bovinos,lotes,potreros,pesajes,tipoAlimento,alimentacion
 from database.elastic_indices import create_indices, sync_bovinos
+from database.redis import init_redis, close_redis
 
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
+    await init_redis()
     await create_indices()
     await sync_bovinos()
     yield
+    await close_redis()
 
 
 app = FastAPI(
