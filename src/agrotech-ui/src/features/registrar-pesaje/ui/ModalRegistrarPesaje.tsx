@@ -8,9 +8,10 @@ import { PasoSeleccionBovino } from "@/entities/bovino/ui/pasoSeleccionBovino/Pa
 interface Props {
   isOpen: boolean;
   onClose: () => void;
+  onSuccess?: () => void;
 }
 
-export const ModalRegistrarPesaje = ({ isOpen, onClose }: Props) => {
+export const ModalRegistrarPesaje = ({ isOpen, onClose, onSuccess }: Props) => {
   const {
     paso,
     potreros,
@@ -73,7 +74,7 @@ export const ModalRegistrarPesaje = ({ isOpen, onClose }: Props) => {
           bovino={bovinoSeleccionado}
           peso={formData.peso}
           onPesoChange={(valor) => setFormData({ peso: valor })}
-          onConfirmar={async () => { await submit(); handleClose(); }}
+          onConfirmar={async () => { const ok = await submit(); if (ok) { handleClose(); onSuccess?.(); } }}
           onCancelar={handleClose}
           submitting={submitting}
         />

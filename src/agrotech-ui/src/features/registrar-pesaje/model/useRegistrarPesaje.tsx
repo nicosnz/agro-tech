@@ -56,14 +56,17 @@ export const useRegistrarPesaje = () => {
     setFormData({ peso: "" });
   };
 
-  const submit = async () => {
-    if (!bovinoSeleccionado || !formData.peso) return;
+  const submit = async (): Promise<boolean> => {
+    if (!bovinoSeleccionado || !formData.peso) return false;
     setSubmitting(true);
     try {
       await pesajeApi.postPesaje({
         id: bovinoSeleccionado.id,
         peso: parseFloat(formData.peso),
       });
+      return true;
+    } catch {
+      return false;
     } finally {
       setSubmitting(false);
     }

@@ -24,7 +24,7 @@ export const SearchInput = ({onChange,valueSearch}:Props) => {
       <input
         value={valueSearch}
         onChange={onChange}
-        placeholder="Buscar..."
+        placeholder="Buscar por Id, Raza, Lote"
         className={styles["search-input__field"]}
       />
     </div>
