@@ -15,10 +15,13 @@ type Stats = {
 export const StatsBovino = ({bovinos}:Props) => {
     const stats:Stats[] = [
         { label: "Total Ganado",   value: bovinos.length, color: "#111827" },
-        { label: "Sanos",        value: bovinos.filter((b) => b.estado_actual.estado === "Sano").length,        color: "#15803d" },
-        { label: "En tratamiento", value: bovinos.filter((b) => b.estado_actual.estado === "En tratamiento").length, color: "#b45309" },
-        { label: "En observacion",       value: bovinos.filter((b) => b.estado_actual.estado === "En observacion").length,       color: "#dc2626" },
-    ];
+        { label: "Sanos",        value: bovinos.filter((b) => b.estado_actual?.estado === "Sano").length,        color: "#15803d" },
+        { label: "En tratamiento", value: bovinos.filter((b) => b.estado_actual?.estado === "En tratamiento").length, color: "#b45309" },
+        { label: "En observacion",       value: bovinos.filter((b) => b.estado_actual?.estado === "En observacion").length,       color: "#dc2626" },
+        { label: "Fallecido",       value: bovinos.filter((b) => b.estado_actual?.estado === "Fallecido").length,       color: "#dc2626" },
+        { label: "Vendido",       value: bovinos.filter((b) => b.estado_actual?.estado === "Vendido").length,       color: "#dc2626" },
+
+      ];
   return (
     <div className={styles["stats-bovino"]}>
           {stats.map((stat) => (

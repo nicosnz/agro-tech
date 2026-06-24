@@ -6,7 +6,7 @@ export interface Bovino {
     lote:             LoteRef;
     peso_actual:      Peso | null;
     peso_anterior:      Peso | null;
-    estado_actual:    EstadoActual;
+    estado_actual:    EstadoActual | null;
     fecha_nacimiento: Date;
 }
 
