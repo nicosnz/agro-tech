@@ -9,12 +9,26 @@ class ElasticBovinoRepository:
     def __init__(self, elastic: AsyncElasticsearch):
         self.elastic = elastic
 
+    async def update_pesos_bovino(self, id_animal: str, peso_actual: dict | None, peso_anterior: dict | None):
+        await self.elastic.update(
+            index=BOVINOS_INDEX,
+            id=id_animal,
+            body={
+                "doc": {
+                    "peso_actual":         float(peso_actual['peso'])                     if peso_actual  else None,
+                    "fecha_peso_actual":   peso_actual['fecha_pesaje'].isoformat()        if peso_actual  else None,
+                    "peso_anterior":       float(peso_anterior['peso'])                   if peso_anterior else None,
+                    "fecha_peso_anterior": peso_anterior['fecha_pesaje'].isoformat()      if peso_anterior else None,
+                }
+            }
+        )
+
     async def search(self, q: str) -> list:
         query = {
             "query": {
                 "multi_match": {
                     "query": q,
-                    "fields": ["raza", "sexo", "origen", "lote_nombre","fecha_peso_actual"]
+                    "fields": ["id","raza", "sexo", "origen", "lote_nombre","fecha_peso_actual"]
                 }
             }
         }
