@@ -27,6 +27,11 @@ class BovinoRepository(BaseRepository[Bovino]):
         result = await self.session.exec(query)
         return result.all()
 
+    async def get_all_sin_paginacion(self) -> List:
+        query = select(Bovino, Lote).join(Lote, Bovino.id_lote == Lote.id, isouter=True)
+        result = await self.session.exec(query)
+        return result.all()
+
     async def get_by_lote(self,id_lote:UUID) -> List[Bovino]:
         query = (select(Bovino).where(Bovino.id_lote == id_lote))
         result = await self.session.exec(query)

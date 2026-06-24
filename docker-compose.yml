@@ -44,7 +44,8 @@ services:
     depends_on:
       database:
         condition: service_healthy
-
+      elasticsearch:
+        condition: service_healthy
     env_file:
       - .env
   proxy:
@@ -67,6 +68,23 @@ services:
       - ./proxy-reverse:/etc/nginx/conf.d
       - static_volume:/app/staticfiles
       - media_volume:/app/media
+
+  elasticsearch:
+    image: elasticsearch:8.13.0
+    expose:
+      - "9200"
+    environment:
+      - discovery.type=single-node
+      - xpack.security.enabled=false
+    healthcheck:
+      test: ["CMD-SHELL", "curl -s http://localhost:9200/_cluster/health | grep -q '\"status\":\"green\"\\|\"status\":\"yellow\"'"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+    networks:
+      - agrotech-private
+    restart: always
 
 volumes:
   agrovolume:
