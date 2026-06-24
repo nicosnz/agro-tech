@@ -3,7 +3,7 @@ import { ButtonAdd } from "@/shared/ui/buttonAdd/ButtonAdd";
 import { AlimentoGrid } from "@/widgets/alimento-grid/ui/AlimentoGrid";
 import { ModalRegistrarAlimentacion } from "@/features/registrar-alimentacion/ui/ModalRegistrarAlimentacion";
 import { Toast } from "@/shared/ui/toast/Toast";
-import styles from "./alimentacion.module.css";
+import styles from "./Alimentacion.module.css";
 
 export const Alimentacion = () => {
   const [showModal, setShowModal] = useState(false);

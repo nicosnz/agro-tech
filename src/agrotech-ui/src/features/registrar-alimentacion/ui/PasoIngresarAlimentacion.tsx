@@ -2,9 +2,9 @@ import { useState, useEffect } from "react";
 import { tipoAlimentoApi } from "@/entities/tipoAlimento/api/tipoAlimentoApi";
 import type { TipoAlimento } from "@/entities/tipoAlimento/model/types";
 import type { Lote } from "@/entities/lote/model/types";
-import styles from "./pasoIngresarAlimentacion.module.css";
+import styles from "./PasoIngresarAlimentacion.module.css";
 
-interface FormData {
+type FormData =  {
   id_tipo_alimento: string;
   cantidad: string;
   observacion: string;

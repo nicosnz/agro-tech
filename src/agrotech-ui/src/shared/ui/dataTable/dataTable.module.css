@@ -1,11 +1,11 @@
-.data-table__wrapper {
-  overflow-x: auto;
-}
-
 .data-table {
   width: 100%;
   border-collapse: collapse;
 }
+.data-table__wrapper {
+  overflow-x: auto;
+}
+
 
 .data-table__head-row {
   background: #f9fafb;

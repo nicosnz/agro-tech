@@ -1,5 +1,12 @@
-.stats {
+.stats-bovino {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 16px;
+}
+
+@media (max-width: 767px) {
+  .stats-bovino {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
 }

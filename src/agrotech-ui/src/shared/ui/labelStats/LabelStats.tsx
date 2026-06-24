@@ -1,4 +1,4 @@
-import styles from './labelStats.module.css'
+import styles from './LabelStats.module.css'
 
 
 interface Props{
@@ -10,7 +10,7 @@ interface Props{
 
 export const LabelStats = ({label,color,value,unit}:Props) => {
   return (
-        <div className={styles["stats__card"]}>
+        <div className={styles["stats"]}>
             <p className={styles["stats__label"]}>{label}</p>
             <p className={styles["stats__value"]} style={{ color:color }}>{value}{unit && ` ${unit}`}</p>
         </div>

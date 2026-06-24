@@ -4,14 +4,14 @@ import { bovinoApi } from "@/entities/bovino/api/bovinoApi";
 import { calcularEdad } from "@/shared/lib/calcularEdad";
 import type { Lote } from "@/entities/lote/model/types";
 import type { Bovino } from "@/entities/bovino/model/types";
-import styles from "./pasoSeleccionBovino.module.css";
+import styles from "./PasoSeleccionBovino.module.css";
+import { numericId } from "@/shared/lib/toNumericId";
 
 interface Props {
   lote: Lote;
   onSelect: (bovino: Bovino) => void;
 }
 
-const numericId = (id: string) => id.replace(/\D/g, "").slice(-3);
 
 export const PasoSeleccionBovino = ({ lote, onSelect }: Props) => {
   const [bovinos, setBovinos] = useState<Bovino[]>([]);

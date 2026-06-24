@@ -28,6 +28,16 @@
   width: 160px;
 }
 
+@media (max-width: 767px) {
+  .search-input {
+    width: 100%;
+  }
+
+  .search-input__field {
+    width: 100%;
+  }
+}
+
 .search-input__field::placeholder {
   color: #9ca3af;
 }

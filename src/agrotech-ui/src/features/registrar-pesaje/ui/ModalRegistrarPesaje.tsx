@@ -1,9 +1,9 @@
 import { Modal } from "@/shared/ui/modal/Modal";
 import { useRegistrarPesaje } from "../model/useRegistrarPesaje";
-import { PasoSeleccionBovino } from "./pasos/PasoSeleccionBovino";
-import { PasoIngresarPeso } from "./pasos/PasoIngresarPeso";
+import { PasoIngresarPeso } from "./PasoIngresarPeso";
 import { PasoSeleccionPotrero } from "@/entities/potrero/ui/pasoSeleccion/PasoSeleccionPotrero";
 import { PasoSeleccionLote } from "@/entities/lote/ui/pasoSeleccion/PasoSeleccionLote";
+import { PasoSeleccionBovino } from "@/entities/bovino/ui/pasoSeleccionBovino/PasoSeleccionBovino";
 
 interface Props {
   isOpen: boolean;

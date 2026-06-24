@@ -3,13 +3,14 @@ import { DataTable, tableStyles } from '@/shared/ui/dataTable/DataTable';
 import { StatsBovino } from '@/entities/bovino/ui/statsBovinos/StatsBovino';
 import { BadgeEstado } from '@/entities/bovino/ui/badgeEstado/BadgeEstado';
 import { BadgeLote } from '@/entities/bovino/ui/badgeLote/BadgeLote';
+import { BovinoCard } from '@/entities/bovino/ui/bovinoCard/BovinoCard';
 import { SearchInput } from '@/shared/ui/searchInput/SearchInput';
 import { Pagination } from '@/shared/ui/pagination/Pagination';
 import { Loading } from '@/shared/ui/loading/Loading';
 import { Error } from '@/shared/ui/error/Error';
 import { BotonFiltros } from '@/features/filtrar-ganado-por-estado/ui/BotonFiltros';
 import { useGanadoTable } from '../model/useGanadoTable';
-import styles from './ganadoTable.module.css';
+import styles from './GanadoTable.module.css';
 
 const COLUMNAS = ["ID", "Lote", "Raza", "Edad", "Peso", "Estado", ""];
 
@@ -58,25 +59,36 @@ export const GanadoTable = () => {
           onPrev={() => setPagina(p => p - 1)}
         />
 
-        <DataTable
-          columnas={COLUMNAS}
-          datos={filtered}
-          keyExtractor={(b) => b.id}
-          empty="No se encontraron animales."
-          renderizarFila={(bovino) => (
-            <>
-              <td className={`${tableStyles["data-table__td"]} ${styles["ganado-table__td--id"]}`}>{bovino.id}</td>
-              <td className={tableStyles["data-table__td"]}><BadgeLote lote={bovino.lote.nombre} /></td>
-              <td className={tableStyles["data-table__td"]}>{bovino.raza}</td>
-              <td className={tableStyles["data-table__td"]}>{calcularEdad(bovino.fecha_nacimiento)}</td>
-              <td className={tableStyles["data-table__td"]}>{bovino.peso_actual ? `${bovino.peso_actual.peso} kg` : "—"}</td>
-              <td className={tableStyles["data-table__td"]}><BadgeEstado estado={bovino.estado_actual.estado} /></td>
-              <td className={tableStyles["data-table__td"]}>
-                <button className={styles["ver-btn"]}>Ver más</button>
-              </td>
-            </>
-          )}
-        />
+        <div className={styles["ganado-table__desktop"]}>
+          <DataTable
+            columnas={COLUMNAS}
+            datos={filtered}
+            keyExtractor={(b) => b.id}
+            empty="No se encontraron animales."
+            renderizarFila={(bovino) => (
+              <>
+                <td className={`${tableStyles["data-table__td"]} ${styles["ganado-table__td--id"]}`}>{bovino.id}</td>
+                <td className={tableStyles["data-table__td"]}><BadgeLote lote={bovino.lote.nombre} /></td>
+                <td className={tableStyles["data-table__td"]}>{bovino.raza}</td>
+                <td className={tableStyles["data-table__td"]}>{calcularEdad(bovino.fecha_nacimiento)}</td>
+                <td className={tableStyles["data-table__td"]}>{bovino.peso_actual ? `${bovino.peso_actual.peso} kg` : "—"}</td>
+                <td className={tableStyles["data-table__td"]}><BadgeEstado estado={bovino.estado_actual.estado} /></td>
+                <td className={tableStyles["data-table__td"]}>
+                  <button className={styles["ver-btn"]}>Ver más</button>
+                </td>
+              </>
+            )}
+          />
+        </div>
+
+        <div className={styles["ganado-table__card-list"]}>
+          {filtered.length === 0
+            ? <p className={styles["ganado-table__empty-cards"]}>No se encontraron animales.</p>
+            : filtered.map((bovino) => (
+                <BovinoCard key={bovino.id} bovino={bovino} />
+              ))
+          }
+        </div>
       </div>
     </>
   );

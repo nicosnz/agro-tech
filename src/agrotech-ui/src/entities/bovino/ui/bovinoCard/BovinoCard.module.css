@@ -1,0 +1,81 @@
+.bovino-card {
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 14px;
+  padding: 14px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.bovino-card__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.bovino-card__id {
+  font-size: 16px;
+  font-weight: 700;
+  color: #14532d;
+}
+
+.bovino-card__meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.bovino-card__raza {
+  font-size: 14px;
+  color: #374151;
+  font-weight: 500;
+}
+
+.bovino-card__stats {
+  display: flex;
+  gap: 24px;
+}
+
+.bovino-card__stat {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.bovino-card__stat-label {
+  font-size: 10px;
+  font-weight: 600;
+  color: #9ca3af;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.bovino-card__stat-value {
+  font-size: 14px;
+  font-weight: 600;
+  color: #111827;
+}
+
+.bovino-card__footer {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.bovino-card__ver-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 5px 12px;
+  background: #f0fdf4;
+  border: 1px solid #bbf7d0;
+  color: #15803d;
+  font-size: 13px;
+  font-weight: 600;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 150ms;
+}
+
+.bovino-card__ver-btn:hover { background: #dcfce7; }

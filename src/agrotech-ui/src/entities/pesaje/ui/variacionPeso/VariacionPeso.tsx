@@ -1,5 +1,5 @@
 import type { Peso } from "@/entities/pesaje/model/types";
-import styles from "./variacionPeso.module.css";
+import styles from "./VariacionPeso.module.css";
 
 interface Props {
   actual: Peso | null;

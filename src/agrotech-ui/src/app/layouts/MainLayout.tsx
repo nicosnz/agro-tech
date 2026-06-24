@@ -95,6 +95,21 @@ export const MainLayout = () => {
       <main className={styles["layout__content"]}>
         <Outlet />
       </main>
+
+      <nav className={styles["bottom-nav"]}>
+        {navItems.map((item) => (
+          <NavLink
+            key={item.to}
+            to={item.to}
+            className={({ isActive }) =>
+              [styles["bottom-nav__item"], isActive ? styles["bottom-nav__item--active"] : ""].join(" ")
+            }
+          >
+            <span className={styles["bottom-nav__icon"]}>{item.icon}</span>
+            <span className={styles["bottom-nav__label"]}>{item.label}</span>
+          </NavLink>
+        ))}
+      </nav>
     </div>
   );
 };

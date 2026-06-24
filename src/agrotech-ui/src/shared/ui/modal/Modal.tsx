@@ -1,5 +1,5 @@
 import { useEffect, type ReactNode } from "react";
-import styles from "./modal.module.css";
+import styles from "./Modal.module.css";
 
 interface Props {
   isOpen: boolean;
@@ -38,7 +38,7 @@ export const Modal = ({ isOpen, onClose, onAnterior, title, subtitle, children }
   if (!isOpen) return null;
 
   return (
-    <div className={styles["modal__overlay"]} onClick={onClose}>
+    <div className={styles["modal"]} onClick={onClose}>
       <div className={styles["modal__container"]} onClick={(e) => e.stopPropagation()}>
         <div className={styles["modal__header"]}>
           {onAnterior && (

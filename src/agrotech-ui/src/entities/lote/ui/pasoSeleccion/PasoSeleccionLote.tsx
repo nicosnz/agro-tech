@@ -3,7 +3,7 @@ import { SearchInput } from "@/shared/ui/searchInput/SearchInput";
 import { loteApi } from "@/entities/lote/api/loteApi";
 import type { Potrero } from "@/entities/potrero/model/types";
 import type { Lote } from "@/entities/lote/model/types";
-import styles from "./pasoSeleccionLote.module.css";
+import styles from "./PasoSeleccionLote.module.css";
 
 interface Props {
   potrero: Potrero;
