@@ -1,0 +1,28 @@
+services:
+  proxy:
+    build:
+      context: ./src/agrotech-ui
+      args:
+        VITE_API_URL: ${VITE_API_URL}
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./proxy-reverse/default.prod.conf:/etc/nginx/conf.d/default.conf
+      - static_volume:/app/staticfiles
+      - media_volume:/app/media
+      - letsencrypt:/etc/letsencrypt:ro
+      - certbot-webroot:/var/www/certbot
+
+  certbot:
+    image: certbot/certbot
+    volumes:
+      - letsencrypt:/etc/letsencrypt
+      - certbot-webroot:/var/www/certbot
+    entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew --quiet; sleep 12h & wait $${!}; done;'"
+    networks:
+      - agrotech-private
+
+volumes:
+  letsencrypt:
+  certbot-webroot:
