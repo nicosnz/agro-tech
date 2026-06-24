@@ -6,10 +6,9 @@ from typing import Optional, List
 from uuid import UUID
 from models.bovino import Bovino
 from models.lote import Lote
-from repositories.baseRepository import BaseRepository
 
 
-class BovinoRepository(BaseRepository[Bovino]):
+class BovinoRepository:
 
     def __init__(self, session: AsyncSession):
         self.session = session
