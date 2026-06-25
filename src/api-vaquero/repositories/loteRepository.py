@@ -11,6 +11,13 @@ class LoteRepository:
     def __init__(self, session: AsyncSession):
         self.session = session
 
+    async def get_all(self) -> List[Lote]:
+        result = await self.session.exec(select(Lote).where(Lote.activo == True))
+        return result.all()
+
+    async def get_by_id(self, id: UUID) -> Lote | None:
+        return await self.session.get(Lote, id)
+
     async def get_by_potrero(self, id_potrero: UUID) -> List[Lote]:
         query = (
             select(Lote)

@@ -3,7 +3,7 @@ import { bovinoApi } from "@/entities/bovino/api/bovinoApi";
 import type { Bovino } from "@/entities/bovino/model/types";
 import { useFiltrarGanadoPorEstado } from "@/features/filtrar-ganado-por-estado/model/useFiltrarGanadoPorEstado";
 
-export const useGanadoTable = () => {
+export const useGanadoTable = (refreshTrigger = 0) => {
   const [bovinos, setBovinos] = useState<Bovino[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -27,7 +27,7 @@ export const useGanadoTable = () => {
     }, search.trim() ? 700 : 0);
 
     return () => clearTimeout(timeoutId);
-  }, [search, pagina]);
+  }, [search, pagina, refreshTrigger]);
 
   const handleSearch = (value: string) => {
     setSearch(value);

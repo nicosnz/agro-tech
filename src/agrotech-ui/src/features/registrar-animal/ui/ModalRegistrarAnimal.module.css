@@ -1,0 +1,65 @@
+.form-animal {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.form-animal__row {
+  display: flex;
+  gap: 10px;
+}
+
+.form-animal__campo {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex: 1;
+}
+
+.form-animal__label {
+  font-size: 13px;
+}
+
+.form-animal__opcional {
+  color: #9ca3af;
+}
+
+.form-animal__select,
+.form-animal__input {
+  width: 100%;
+  padding: 6px 8px;
+  border: 1px solid #d1d5db;
+  border-radius: 4px;
+  font-size: 14px;
+  box-sizing: border-box;
+}
+
+.form-animal__acciones {
+  display: flex;
+  gap: 8px;
+}
+
+.form-animal__btn-cancelar,
+.form-animal__btn-confirmar {
+  flex: 1;
+  padding: 8px;
+  font-size: 14px;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.form-animal__btn-cancelar {
+  border: 1px solid #d1d5db;
+  background: #fff;
+}
+
+.form-animal__btn-confirmar {
+  border: none;
+  background: #16a34a;
+  color: #fff;
+}
+
+.form-animal__btn-confirmar:disabled {
+  background: #d1d5db;
+  cursor: not-allowed;
+}

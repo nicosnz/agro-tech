@@ -31,12 +31,19 @@ class BovinoRepository:
         result = await self.session.exec(query)
         return result.all()
 
+    async def get_machos(self) -> List[Bovino]:
+        query = (select(Bovino).where(Bovino.sexo == "Macho"))
+        result = await self.session.exec(query)
+        return result.all()
+    async def get_hembras(self) -> List[Bovino]:
+        query = (select(Bovino).where(Bovino.sexo == "Hembra"))
+        result = await self.session.exec(query)
+        return result.all()
     async def get_by_lote(self,id_lote:UUID) -> List[Bovino]:
         query = (select(Bovino).where(Bovino.id_lote == id_lote))
         result = await self.session.exec(query)
         return result.all()
     
-
     async def create(self, bovino: Bovino) -> Bovino:
         self.session.add(bovino)
         await self.session.commit()

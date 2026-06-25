@@ -14,7 +14,11 @@ import styles from './GanadoTable.module.css';
 
 const COLUMNAS = ["ID", "Lote", "Raza", "Edad", "Peso", "Estado", ""];
 
-export const GanadoTable = () => {
+interface Props {
+  refreshTrigger?: number;
+}
+
+export const GanadoTable = ({ refreshTrigger = 0 }: Props) => {
   const {
     bovinos,
     filtered,
@@ -27,7 +31,7 @@ export const GanadoTable = () => {
     estados,
     filterEstado,
     setFilterEstado,
-  } = useGanadoTable();
+  } = useGanadoTable(refreshTrigger);
 
   if (loading) return <Loading />;
   if (error)   return <Error error={error} />;
@@ -72,7 +76,7 @@ export const GanadoTable = () => {
                 <td className={tableStyles["data-table__td"]}>{bovino.raza}</td>
                 <td className={tableStyles["data-table__td"]}>{calcularEdad(bovino.fecha_nacimiento)}</td>
                 <td className={tableStyles["data-table__td"]}>{bovino.peso_actual ? `${bovino.peso_actual.peso} kg` : "—"}</td>
-                <td className={tableStyles["data-table__td"]}><BadgeEstado estado={bovino.estado_actual?.estado ?? "—"} /></td>
+                <td className={tableStyles["data-table__td"]}><BadgeEstado estado={bovino.estado_actual?.estado ?? "Sano"} /></td>
                 
               </>
             )}

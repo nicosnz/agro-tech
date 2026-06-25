@@ -42,7 +42,8 @@ class BovinoResponseGetAll(BaseModel):
     peso_anterior: Optional[PesajeResumen]
     estado_actual: Optional[EstadoResumen]
 
-
+class BovinosIds(BaseModel):
+    id:uuid.UUID
 class GetAllBovinos:
     def __init__(
         self,
@@ -110,6 +111,26 @@ class GetAllBovinos:
             await self.redis.set(key, serialized, ex=CACHE_TTL)
         except Exception:
             logger.warning("Redis set falló para key %s", key)
+    async def get_machos(self) -> List[BovinosIds]:
+        bovinos = await self.bovino_repo.get_machos()
+        resultado = []
+        for bovino in bovinos:
+            resultado.append(
+                BovinosIds(
+                    id=bovino.id
+                )
+            )
+        return resultado
+    async def get_hembras(self) -> List[BovinosIds]:
+        bovinos = await self.bovino_repo.get_hembras()
+        resultado = []
+        for bovino in bovinos:
+            resultado.append(
+                BovinosIds(
+                    id=bovino.id
+                )
+            )
+        return resultado       
 
 
 def get_all_bovinos(

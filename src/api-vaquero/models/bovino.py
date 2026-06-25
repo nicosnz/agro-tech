@@ -31,8 +31,8 @@ class Bovino(SQLModel,table=True):
     __table_args__={'schema':'content'}
 
     id: uuid.UUID = Field(default_factory=uuid.uuid4,primary_key=True,index=True)
-    sexo: Optional[SexoBovinos] = Field(default=None, sa_type=SAEnum(SexoBovinos, values_callable=_enum_values))
-    raza: Optional[RazaBovinos] = Field(default=None, sa_type=SAEnum(RazaBovinos, values_callable=_enum_values))
+    sexo: Optional[SexoBovinos] = Field(default=None, sa_type=SAEnum(SexoBovinos, values_callable=_enum_values, native_enum=False))
+    raza: Optional[RazaBovinos] = Field(default=None, sa_type=SAEnum(RazaBovinos, values_callable=_enum_values, native_enum=False))
     fecha_nacimiento:date
     id_madre: Optional[uuid.UUID] = Field(default=None, foreign_key='content.bovino.id')
     id_padre: Optional[uuid.UUID] = Field(default=None, foreign_key='content.bovino.id')
@@ -42,6 +42,6 @@ class Bovino(SQLModel,table=True):
     vacunaciones:List['Vacunacion'] = Relationship(back_populates='bovino')
     estados:List['EstadoAnimal'] = Relationship(back_populates='bovino')
 
-    origen: Optional[OrigenBovino] = Field(default=None, sa_type=SAEnum(OrigenBovino, values_callable=_enum_values))
+    origen: Optional[OrigenBovino] = Field(default=None, sa_type=SAEnum(OrigenBovino, values_callable=_enum_values, native_enum=False))
     creado_en:datetime
     actualizado_en:datetime

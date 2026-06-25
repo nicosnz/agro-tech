@@ -1,5 +1,5 @@
 import { apiClient } from '@/shared/api/clienteHttp'
-import type { Bovino } from '../model/types'
+import type { Bovino, BovinoIds, BovinoRequest } from '../model/types'
 
 export const bovinoApi = {
   getAll: async (pagina = 1): Promise<Bovino[]> => {
@@ -16,4 +16,17 @@ export const bovinoApi = {
     return Array.isArray(res.data) ? res.data : []
 
   },
+  postBovino: async (bovino:BovinoRequest): Promise<Bovino> => {
+          const res = await apiClient.post('/api/v1/bovinos/',bovino)
+          return res.data
+  },
+  getMachos: async (): Promise<BovinoIds[]> => {
+    const res = await apiClient.get('/api/v1/bovinos/machos')
+    return Array.isArray(res.data) ? res.data : []
+  },
+  getHembras: async (): Promise<BovinoIds[]> => {
+    const res = await apiClient.get('/api/v1/bovinos/hembras')
+    return Array.isArray(res.data) ? res.data : []
+  },
+
 }
